@@ -1,4 +1,3 @@
-
 package org.bitbuckets.frc2016.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -6,7 +5,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  *
  */
-public class ExampleSubsystem extends Subsystem {
+public class Sucky extends Subsystem {
     
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
