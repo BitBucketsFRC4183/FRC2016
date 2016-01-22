@@ -1,20 +1,18 @@
-package org.usfirst.frc.team4183.robot.commands;
 
-import org.usfirst.frc.team4183.robot.OI;
-import org.usfirst.frc.team4183.robot.Robot;
+package org.bitbuckets.frc2016.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+
+import org.bitbuckets.frc2016.Robot;
 
 /**
  *
  */
-public class SuckIn extends Command {
-	public OI oi;;
+public class ExampleCommand extends Command {
 
-    public SuckIn() {
+    public ExampleCommand() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.sucky);
-        
+        requires(Robot.exampleSubsystem);
     }
 
     // Called just before this Command runs the first time
@@ -23,8 +21,6 @@ public class SuckIn extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
-    	
     }
 
     // Make this return true when this Command no longer needs to run execute()

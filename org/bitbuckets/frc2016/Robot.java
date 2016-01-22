@@ -1,20 +1,12 @@
 
-package org.usfirst.frc.team4183.robot;
+package org.bitbuckets.frc2016;
 
-import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Joystick.AxisType;
-import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-
-import org.usfirst.frc.team4183.robot.commands.DriveyLeft;
-import org.usfirst.frc.team4183.robot.commands.DriveyRight;
-import org.usfirst.frc.team4183.robot.commands.DriveyStraight;
-import org.usfirst.frc.team4183.robot.subsystems.Drivey;
-import org.usfirst.frc.team4183.robot.subsystems.Sucky;
-
+import org.bitbuckets.frc2016.commands.ExampleCommand;
+import org.bitbuckets.frc2016.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -27,13 +19,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-	public RobotDrive rDrive;
-	public static final Drivey drivey = new Drivey();
-	public static final Sucky sucky = new Sucky();
+	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static OI oi;
-		
-	public static AnalogGyro gyro;
-	
+
     Command autonomousCommand;
     SendableChooser chooser;
 
@@ -43,11 +31,8 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
 		oi = new OI();
-		rDrive = new RobotDrive(drivey.left,drivey.right);
-		gyro = new AnalogGyro(0);
-		
         chooser = new SendableChooser();
-        //chooser.addDefault("Default Auto", new DriveyStraight());
+        chooser.addDefault("Default Auto", new ExampleCommand());
 //        chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
     }
@@ -76,7 +61,6 @@ public class Robot extends IterativeRobot {
 	 */
     public void autonomousInit() {
         autonomousCommand = (Command) chooser.getSelected();
-        gyro.calibrate();
         
 		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
 		switch(autoSelected) {
@@ -98,8 +82,6 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
-        SmartDashboard.putNumber("Angle", gyro.getAngle());
-        
     }
 
     public void teleopInit() {
@@ -115,17 +97,6 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        if(oi.driver.getIsXbox()){
-        	SmartDashboard.putString(" ", "Y U USE XBOX");
-        }
-        
-        //double magnitude = Math.pow(2,(oi.driver.getMagnitude()))-1;
-        rDrive.arcadeDrive(-oi.driver.getAxis(AxisType.kY), -oi.driver.getAxis(AxisType.kTwist), true);
-        
-        sucky.setSpeed(oi.operator.getAxis(AxisType.kY), oi.operator.getAxis(AxisType.kTwist));
-        //drivey.driveTank(oi.stick.getAxis(AxisType.kY), oi.stick.getAxis(AxisType.kZ));
-        
-        
     }
     
     /**
