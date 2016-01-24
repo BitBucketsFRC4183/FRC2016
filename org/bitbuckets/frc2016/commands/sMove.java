@@ -8,11 +8,11 @@ import org.bitbuckets.frc2016.Robot;
 /**
  *
  */
-public class ExampleCommand extends Command {
+public class sMove extends Command {
 
-    public ExampleCommand() {
+    public sMove() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.exampleSubsystem);
+        requires(Robot.drivey);
     }
 
     // Called just before this Command runs the first time

@@ -1,12 +1,16 @@
 
 package org.bitbuckets.frc2016;
 
+import org.bitbuckets.frc2016.commands.sMove;
+import org.bitbuckets.frc2016.subsystems.Drivey;
+import org.bitbuckets.frc2016.subsystems.Sucky;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Joystick.AxisType;
+import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import org.bitbuckets.frc2016.commands.ExampleCommand;
-import org.bitbuckets.frc2016.subsystems.Drivey;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -19,20 +23,24 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-	public static final Drivey exampleSubsystem = new Drivey();
+	public static final Drivey drivey = new Drivey();
+	public static final Sucky sucky = new Sucky();
+	
 	public static OI oi;
 
     Command autonomousCommand;
     SendableChooser chooser;
-
+    RobotDrive rDrive;
+    
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
 		oi = new OI();
+		rDrive = new RobotDrive(drivey.left,drivey.right);
         chooser = new SendableChooser();
-        chooser.addDefault("Default Auto", new ExampleCommand());
+        chooser.addDefault("Default Auto", new sMove());
 //        chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
     }
@@ -82,7 +90,14 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+        long timeInit = System.currentTimeMillis();
+        if(System.currentTimeMillis()-timeInit>=4000){
+        	drivey.left.set(0.6);
+        	drivey.right.set(0.6); 
+        }
     }
+    
+    
 
     public void teleopInit() {
 		// This makes sure that the autonomous stops running when
@@ -97,6 +112,9 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        rDrive.arcadeDrive(oi.driver.getAxis(AxisType.kY), oi.driver.getAxis(AxisType.kTwist));
+        sucky.twist.set(oi.operator.getAxis(AxisType.kY));
+        sucky.roll.set(oi.operator.getAxis(AxisType.kTwist));
     }
     
     /**
