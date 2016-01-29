@@ -10,14 +10,25 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class Drivey extends Subsystem {
-    public CANTalon right = new CANTalon(RobotMap.rightMotor);
-    public CANTalon left = new CANTalon(RobotMap.leftMotor);
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
+	private CANTalon right = new CANTalon(RobotMap.rightMotor);
+	private CANTalon left = new CANTalon(RobotMap.leftMotor);
+	// Put methods for controlling this subsystem
+	// here. Call these from Commands.
 
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
-    }
+	private double kAngle = 0.0005;
+
+	public void initDefaultCommand() {
+		// Set the default command for a subsystem here.
+		// setDefaultCommand(new MySpecialCommand());
+	}
+
+	public void drive(double speed, double angle) {
+
+		if (angle == 0) {
+			right.set(speed);
+			left.set(speed);
+		} else if (angle == 45) {
+			left.set((angle * kAngle) + speed);
+		}
+	}
 }
-
