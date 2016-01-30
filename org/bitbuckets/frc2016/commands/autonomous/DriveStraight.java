@@ -15,26 +15,27 @@ public class DriveStraight extends Command {
 
 	@Override
 	protected void initialize() {
-		Robot.drivey.drive(Constants.Autonomous.DRIVE_VEL, 0);
+		timeInit = System.currentTimeMillis();
+		Robot.drivey.driveM(Constants.Autonomous.DRIVE_VEL, 0);
 	}
 
 	@Override
 	protected void execute() {
-		Robot.drivey.drive(Constants.Autonomous.DRIVE_VEL, 0);
+		Robot.drivey.driveM(Constants.Autonomous.DRIVE_VEL, 0);
 	}
 
 	@Override
 	protected boolean isFinished() {
-		return System.currentTimeMillis() - timeInit >= distance * Constants.Autonomous.DRIVE_VEL;
+		return System.currentTimeMillis() - timeInit >= distance / Constants.Autonomous.DRIVE_VEL;
 	}
 
 	@Override
 	protected void end() {
-		Robot.drivey.drive(0, 0);
+		Robot.drivey.driveM(0, 0);
 	}
 
 	@Override
 	protected void interrupted() {
-		Robot.drivey.drive(0, 0);
+		Robot.drivey.driveM(0, 0);
 	}
 }

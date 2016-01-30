@@ -1,6 +1,7 @@
 
 package org.bitbuckets.frc2016.subsystems;
 
+import org.bitbuckets.frc2016.Constants;
 import org.bitbuckets.frc2016.RobotMap;
 
 import edu.wpi.first.wpilibj.CANTalon;
@@ -22,13 +23,16 @@ public class Drivey extends Subsystem {
 		// setDefaultCommand(new MySpecialCommand());
 	}
 
-	public void drive(double speed, double angle) {
+	public void driveM(double speed, double radius) {
+		drive(speed * Constants.DRIVE_VEL_TO_POWER, radius * Constants.DRIVE_RAD_TO_POWER);
+	}
 
-		if (angle == 0) {
+	public void drive(double speed, double radius) {
+		if (radius == 0) {
 			right.set(speed);
 			left.set(speed);
-		} else if (angle == 45) {
-			left.set((angle * kAngle) + speed);
+		} else if (radius == 45) {
+			left.set((radius * kAngle) + speed);
 		}
 	}
 }

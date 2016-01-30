@@ -12,31 +12,32 @@ public class DriveAngle extends Command {
 
 	public DriveAngle(int dist, int rad) {
 		distance = dist;
-		radius = rad / Constants.Autonomous.DRIVE_ANGLE_OPERATOR;
+		radius = rad / Constants.Autonomous.DRIVE_ANGLE_COEFFICIENT;
 	}
 
 	@Override
 	protected void initialize() {
-		Robot.drivey.drive(Constants.Autonomous.DRIVE_VEL, radius);
+		timeInit = System.currentTimeMillis();
+		Robot.drivey.driveM(Constants.Autonomous.DRIVE_VEL, radius);
 	}
 
 	@Override
 	protected void execute() {
-		Robot.drivey.drive(Constants.Autonomous.DRIVE_VEL, radius);
+		Robot.drivey.driveM(Constants.Autonomous.DRIVE_VEL, radius);
 	}
 
 	@Override
 	protected boolean isFinished() {
-		return System.currentTimeMillis() - timeInit >= distance * Constants.Autonomous.DRIVE_VEL;
+		return System.currentTimeMillis() - timeInit >= distance / Constants.Autonomous.DRIVE_VEL;
 	}
 
 	@Override
 	protected void end() {
-		Robot.drivey.drive(0, 0);
+		Robot.drivey.driveM(0, 0);
 	}
 
 	@Override
 	protected void interrupted() {
-		Robot.drivey.drive(0, 0);
+		Robot.drivey.driveM(0, 0);
 	}
 }
