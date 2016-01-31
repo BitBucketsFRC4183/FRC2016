@@ -18,12 +18,12 @@ public class DriveAngle extends Command {
 	@Override
 	protected void initialize() {
 		timeInit = System.currentTimeMillis();
-		Robot.drivey.driveM(Constants.Autonomous.DRIVE_VEL, radius);
+		Robot.drivey.driveMMS(Constants.Autonomous.DRIVE_VEL, radius);
 	}
 
 	@Override
 	protected void execute() {
-		Robot.drivey.driveM(Constants.Autonomous.DRIVE_VEL, radius);
+		Robot.drivey.driveMMS(Constants.Autonomous.DRIVE_VEL, radius);
 	}
 
 	@Override
@@ -33,11 +33,11 @@ public class DriveAngle extends Command {
 
 	@Override
 	protected void end() {
-		Robot.drivey.driveM(0, 0);
+		Robot.drivey.driveMMS(0, 0);
 	}
 
 	@Override
 	protected void interrupted() {
-		Robot.drivey.driveM(0, 0);
+		Robot.drivey.driveMMS(0, 0);
 	}
 }

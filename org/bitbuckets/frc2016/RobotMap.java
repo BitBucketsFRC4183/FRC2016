@@ -9,8 +9,10 @@ package org.bitbuckets.frc2016;
 public class RobotMap {
 	// For example to map the left and right motors, you could define the
 	// following variables to use with your drivetrain subsystem.
-	public static int leftMotor = 0;
-	public static int rightMotor = 1;
+	public static int leftMotor1 = 0;
+	public static int leftMotor2 = 1;
+	public static int rightMotor1 = 2;
+	public static int rightMotor2 = 3;
 
 	public static int rollMotor = 2;
 	public static int liftMotor = 3;
