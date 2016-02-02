@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick.AxisType;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -33,6 +34,7 @@ public class Robot extends IterativeRobot {
 	Command autonomousCommand;
 	SendableChooser chooser;
 	RobotDrive rDrive;
+	TeensyIMU tIMU;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -40,10 +42,12 @@ public class Robot extends IterativeRobot {
 	 */
 	public void robotInit() {
 		oi = new OI();
+		tIMU = new TeensyIMU();
 		chooser = new SendableChooser();
 		chooser.addDefault("Default Auto", new sMove());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
+		
 	}
 	
 	/**
@@ -115,6 +119,8 @@ public class Robot extends IterativeRobot {
 		drivey.drive(oi.driver.getAxis(AxisType.kY), oi.driver.getAxis(AxisType.kX));
 		sucky.twist.set(oi.operator.getAxis(AxisType.kY));
 		sucky.roll.set(oi.operator.getAxis(AxisType.kTwist));
+		
+		
 	}
 
 	/**
