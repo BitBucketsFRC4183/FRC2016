@@ -116,7 +116,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		drivey.drive(oi.driver.getAxis(AxisType.kY), oi.driver.getAxis(AxisType.kX));
+		//drivey.drive(oi.driver.getAxis(AxisType.kY), oi.driver.getAxis(AxisType.kX));
 		sucky.twist.set(oi.operator.getAxis(AxisType.kY));
 		sucky.roll.set(oi.operator.getAxis(AxisType.kTwist));
 		
