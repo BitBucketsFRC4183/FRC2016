@@ -7,12 +7,12 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveAngle extends Command {
 	private int distance;
-	private double radius;
+	private int radius;
 	private long timeInit;
 
 	public DriveAngle(int dist, int rad) {
 		distance = dist;
-		radius = rad / Constants.Autonomous.DRIVE_ANGLE_COEFFICIENT;
+		radius = rad;
 	}
 
 	@Override

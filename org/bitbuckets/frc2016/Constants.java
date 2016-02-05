@@ -12,7 +12,7 @@ package org.bitbuckets.frc2016;
  * WRPM	= wheel RPM
  * K	= constant
  * 
- * @author BitBuckets
+ * @author James Wyeth
  *
  */
 public class Constants {
@@ -37,9 +37,13 @@ public class Constants {
 	public static final int WHEEL_SPROCKET_TEETH = 36;
 	/** The conversion from the wheel RPM to the drive RPM**/
 	public static final double WRPM_TO_RPM = DRIVE_SPROCKET_TEETH/WHEEL_SPROCKET_TEETH;
+	/** Maximum RPM for the wheels **/
+	public static final int MAX_WRPM = 275;
+	/** Maximum RPM for the motors **/
+	public static final int MAX_RPM = (int)(MAX_WRPM*WRPM_TO_RPM);
 	
 	/** The width between the centre of the left centre wheel and the right centre wheel in IN. **/
-	public static final double WHEEL_WIDTH_IN = 46;
+	public static final double WHEEL_WIDTH_IN = 18.5;
 	/** The width betweeen the centre of the left centre wheel and the right centre wheel in REV. **/
 	public static final double WHEEL_WIDTH_REV = WHEEL_WIDTH_IN * WRPM_TO_RPM / WHEEL_CIRCUMFERENCE_IN;
 	
@@ -58,7 +62,8 @@ public class Constants {
 	public static final double DRIVE_KANGLE = 1;
 
 	public class Autonomous {
-		public static final double DRIVE_VEL = 0.75;
+		/** The driving velocity in MMS **/
+		public static final int DRIVE_VEL = 25;
 
 		public static final double DRIVE_ANGLE_COEFFICIENT = 180;
 	}

@@ -41,9 +41,20 @@ public class Drivey extends Subsystem {
 		// setDefaultCommand(new MySpecialCommand());
 	}
 
-	public void driveMMS(double speed, double radius) {
-		// driveWRPM(speed * Constants.DRIVE_VEL_MMS_TO_WRPM, radius *
-		// Constants.DRIVE_RAD_TO_WRPM);
+	public void driveCheez(double speed, double radius) {
+		driveWRPM((int) (speed * Constants.MAX_WRPM), (speed / radius) * 60);
+	}
+
+	/**
+	 * Drives the robot at a speed in MMS with a specified turn radius in MM.
+	 * 
+	 * @param speed
+	 *            The tangential speed in MMS
+	 * @param radius
+	 *            The turn radius in MM
+	 */
+	public void driveMMS(int speed, int radius) {
+		driveWRPM(speed * Constants.DRIVE_VEL_MMS_TO_WRPM, (speed / radius) * 60);
 	}
 
 	/**
@@ -60,8 +71,8 @@ public class Drivey extends Subsystem {
 	 *            The angular velocity of the robot in RAD per MIN. 0 for
 	 *            straight. Anticlockwise is positive.
 	 */
-	public void driveWRPM(double speed, double omega) {
-		speed = speed * Constants.WRPM_TO_RPM;
+	public void driveWRPM(int speed, double omega) {
+		speed = (int) (speed * Constants.WRPM_TO_RPM);
 		if (omega == 0) {
 			right1.set(speed);
 			left1.set(speed);

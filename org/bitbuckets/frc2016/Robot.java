@@ -108,7 +108,7 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 
-		drivey.driveWRPM(oi.driver.getAxis(AxisType.kY), oi.driver.getAxis(AxisType.kX));
+		drivey.driveCheez(oi.driver.getAxis(AxisType.kY), oi.driver.getAxis(AxisType.kX));
 
 		sucky.setLifterMotor(oi.operator.getAxis(AxisType.kY));
 
