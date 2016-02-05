@@ -1,19 +1,17 @@
 package org.bitbuckets.frc2016;
 
-import java.io.BufferedReader;
-import java.io.StringReader;
-import java.nio.ByteBuffer;
+//import java.nio.ByteBuffer;
 
 //import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.SPI.Port;
+//import edu.wpi.first.wpilibj.SPI.Port;
 import jssc.SerialPort;
 import jssc.SerialPortException;
 import jssc.SerialPortList;
 
 public class TeensyIMU {
 	
-	private ByteBuffer readBuffer = ByteBuffer.allocateDirect(1024);
-	private ByteBuffer writeBuffer = ByteBuffer.allocateDirect(1024);
+	//private ByteBuffer readBuffer = ByteBuffer.allocateDirect(1024);
+	//private ByteBuffer writeBuffer = ByteBuffer.allocateDirect(1024);
 	private SerialPort serialPort;
 	private String RAW;
 	private String[]lines;
@@ -61,36 +59,35 @@ public class TeensyIMU {
 	public float getGyro(){
 		
 		if(!serialPort.isOpened())
-		return 0;
+			return 0;
 		else{
 			return hexToDouble(lines[0]);
 		}
-		
 	}
 	
 	public float getAccel(){
 		
 		if(!serialPort.isOpened())
 			return 0;
-			else{
-				return hexToDouble(lines[1]);
-			}
+		else{
+			return hexToDouble(lines[1]);
+		}
 	}
 	
 	public float getMag(){
 		if(!serialPort.isOpened())
 			return 0;
-			else{
-				return hexToDouble(lines[2]);
-			}
+		else{
+			return hexToDouble(lines[2]);
+		}
 	}
-	
+	 
 	public float getPose(){
 		if(!serialPort.isOpened())
 			return 0;
-			else{
-				return hexToDouble(lines[3]);
-			}
+		else{
+			return hexToDouble(lines[3]);
+		}
 	}
 /**It's the port we deserve, but not the port we need right now
 public SPI spi;
