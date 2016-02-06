@@ -1,5 +1,9 @@
 package org.bitbuckets.frc2016;
 
+import java.util.HashMap;
+
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
+
 //import java.nio.ByteBuffer;
 
 //import edu.wpi.first.wpilibj.SPI;
@@ -13,13 +17,18 @@ public class TeensyIMU {
 	//private ByteBuffer readBuffer = ByteBuffer.allocateDirect(1024);
 	//private ByteBuffer writeBuffer = ByteBuffer.allocateDirect(1024);
 	private SerialPort serialPort;
-	private String RAW;
-	private String[]lines;
+	//public HashMap<String, Double> imuData;
+	public NetworkTable imuData;
+	
+	private final int IMUMESSAGELEN = 26; 
 	
 	public TeensyIMU(){
-				
+		
 		serialPort = new SerialPort(SerialPortList.getPortNames()[0]);
-	    
+	    //imuData = new HashMap();
+		imuData = NetworkTable.getTable("IMU Data");
+		
+		
 	    try {
 	        serialPort.openPort();//Open serial port
 	        
@@ -33,14 +42,43 @@ public class TeensyIMU {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
+				String inBuffer = "";
+				String rawIn = "";
 				// TODO Auto-generated method stub
 				while(true){
 						try {
+							//System.out.println(serialPort.readString());
+							if((rawIn=serialPort.readString())!=null){
+								inBuffer+=rawIn;
+								//System.out.println(inBuffer.split("\n"));
+								for(String line : inBuffer.split("\n")){
+									//New line counted as character (Really dumb)
+									line=line.substring(0, line.length()-1);
+									//System.out.println(line.length());
+									//for(int i =0; i<line.length(); i++){
+									//	//System.out.print((int)line.charAt(i) + " ");
+										
+									//}
+									if(line.length()==IMUMESSAGELEN){
+										//System.out.println(line);
+										//imuData.putString("blah", line);
+										
+										for(String datum:line.split(",")){
+											//System.out.println(datum);
+											float f = hexToDouble(datum);
+											//System.out.println(hexToDouble(Integer.toHexString(Float.floatToIntBits(1.0f))));
+											imuData.putNumber("Value", f);
+										}
+										
+										inBuffer="";
+										
+									}else {
+										inBuffer="";
+									}
+								}
+								
+							}
 							
-							RAW = serialPort.readString();
-							lines = RAW.split(System.getProperty("line.separator"));
-							//System.out.println(serialPort.readHexString());
-							//serialPort.closePort();
 						} catch (SerialPortException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -56,39 +94,7 @@ public class TeensyIMU {
 		 
 		}
 	
-	public float getGyro(){
-		
-		if(!serialPort.isOpened())
-			return 0;
-		else{
-			return hexToDouble(lines[0]);
-		}
-	}
 	
-	public float getAccel(){
-		
-		if(!serialPort.isOpened())
-			return 0;
-		else{
-			return hexToDouble(lines[1]);
-		}
-	}
-	
-	public float getMag(){
-		if(!serialPort.isOpened())
-			return 0;
-		else{
-			return hexToDouble(lines[2]);
-		}
-	}
-	 
-	public float getPose(){
-		if(!serialPort.isOpened())
-			return 0;
-		else{
-			return hexToDouble(lines[3]);
-		}
-	}
 /**It's the port we deserve, but not the port we need right now
 public SPI spi;
 		spi = new SPI(port);
@@ -119,19 +125,26 @@ public SPI spi;
 */
 
 	private float hexToDouble(String str){
-
+		
         //Parses string as decimal
         Long i = Long.parseLong(str, 16);
         //Converts newly created decimals to floating point
-        Float f = Float.intBitsToFloat(i.intValue());
+        
+        return Float.intBitsToFloat(i.intValue());
 
-        while(f<(float)4294967295.0) {
-            return f;
-        }
-        //Prints original hex number
-        //System.out.println(Integer.toHexString(Float.floatToIntBits(f)));
-        //Integer.parseInt("099FA", 16);
-        return 0;
-    }	
+    }
+	
+	private long hexToLong(String str){
+		return Long.parseLong(str,16);
+		
+	}
+	
+//	private byte hexToByte(String str){
+//		byte[]bytes = str.getBytes();
+//		
+//		
+//			
+//		}
+//	}
 }
 	
