@@ -1,6 +1,8 @@
 package org.bitbuckets.frc2016;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -14,7 +16,9 @@ public class OI {
 	// number it is.
 	Joystick driver = new Joystick(0);
 	Joystick operator = new Joystick(1);
-	// Button button = new JoystickButton(stick, buttonNumber);
+
+	Button intakeOutbutt = new JoystickButton(operator, 2);
+	Button intakeInbutt = new JoystickButton(operator, 3);
 
 	// There are a few additional built in buttons you can use. Additionally,
 	// by subclassing Button you can create custom triggers and bind those to

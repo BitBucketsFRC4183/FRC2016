@@ -22,7 +22,7 @@ public class goFertyFaav extends Command {
     protected void execute() {
     	long initTime = System.currentTimeMillis();
     	while(System.currentTimeMillis()-initTime<=2000){
-    		Robot.drivey.drive(1, 45.0);
+    		Robot.drivey.driveWRPM(1, 45.0);
     	}
     }
 
