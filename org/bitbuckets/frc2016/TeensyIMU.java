@@ -54,11 +54,7 @@ public class TeensyIMU {
 								for(String line : inBuffer.split("\n")){
 									//New line counted as character (Really dumb)
 									line=line.substring(0, line.length()-1);
-									//System.out.println(line.length());
-									//for(int i =0; i<line.length(); i++){
-									//	//System.out.print((int)line.charAt(i) + " ");
-										
-									//}
+
 									if(line.length()==IMUMESSAGELEN){
 										//System.out.println(line);
 										//imuData.putString("blah", line);
@@ -94,6 +90,13 @@ public class TeensyIMU {
 		 
 		}
 	
+	public void init(){
+		
+	}
+	
+	public void magnoOff(){
+		
+	}
 	
 /**It's the port we deserve, but not the port we need right now
 public SPI spi;
