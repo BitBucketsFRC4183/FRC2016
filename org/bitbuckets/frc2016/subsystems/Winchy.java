@@ -31,7 +31,13 @@ public class Winchy extends Subsystem {
 	public void startMove(boolean up) {
 		if (up) {
 			lock.setAngle(Constants.WINCH_SERVO_UNLOCK_ANGLE);
+		} else{
+			
 		}
+	}
+	
+	public void endMove(){
+		lock.setAngle(Constants.WINCH_SERVO_LOCK_ANGLE);
 	}
 
 }

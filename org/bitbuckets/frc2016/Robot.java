@@ -4,6 +4,7 @@ package org.bitbuckets.frc2016;
 import org.bitbuckets.frc2016.commands.sMove;
 import org.bitbuckets.frc2016.subsystems.Drivey;
 import org.bitbuckets.frc2016.subsystems.Sucky;
+import org.bitbuckets.frc2016.subsystems.Winchy;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick.AxisType;
@@ -25,6 +26,7 @@ public class Robot extends IterativeRobot {
 
 	public static final Drivey drivey = new Drivey();
 	public static final Sucky sucky = new Sucky();
+	public static final Winchy winchy = new Winchy();
 
 	public static OI oi;
 
@@ -108,13 +110,13 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 
-		drivey.driveCheez(oi.driver.getAxis(AxisType.kY), oi.driver.getAxis(AxisType.kX));
+		drivey.driveCheez(oi.driver.getAxis(AxisType.kY), oi.driver.getAxis(AxisType.kTwist));
 
 		sucky.setLifterMotor(oi.operator.getAxis(AxisType.kY));
 
-		if (oi.intakeOutbutt.get() && !oi.intakeInbutt.get()) {
+		if (oi.intakeOutButt.get() && !oi.intakeInButt.get()) {
 			sucky.intakeOut();
-		} else if (oi.intakeInbutt.get()) {
+		} else if (oi.intakeInButt.get()) {
 			sucky.intakeIn();
 		} else {
 			sucky.intakeOff();
