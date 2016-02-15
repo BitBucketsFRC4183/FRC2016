@@ -19,6 +19,9 @@ public class OI {
 
 	Button intakeOutbutt = new JoystickButton(operator, 2);
 	Button intakeInbutt = new JoystickButton(operator, 3);
+	
+	Button juanAidyButt = new JoystickButton(driver, 4);
+	Button fertyFaavButt = new JoystickButton(driver, 1);
 
 	// There are a few additional built in buttons you can use. Additionally,
 	// by subclassing Button you can create custom triggers and bind those to

@@ -6,6 +6,7 @@ import org.bitbuckets.frc2016.RobotMap;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
+import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -18,8 +19,13 @@ public class Drivey extends Subsystem {
 	private CANTalon left2;
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
+	
+	private RobotDrive rDrive;
 
 	public Drivey() {
+		
+		rDrive = new RobotDrive(left1,left2,right1,right2);
+		
 		right1 = new CANTalon(RobotMap.rightMotor1);
 		right2 = new CANTalon(RobotMap.rightMotor2);
 		left1 = new CANTalon(RobotMap.leftMotor1);
@@ -80,5 +86,9 @@ public class Drivey extends Subsystem {
 			left1.set(omega * (speed / omega - Constants.WHEEL_WIDTH_REV / 2));
 			right1.set(omega * (speed / omega + Constants.WHEEL_WIDTH_REV / 2));
 		}
+	}
+	
+	public void arcadeDrive(double move, double rotate){
+		rDrive.arcadeDrive(move, rotate);
 	}
 }

@@ -1,6 +1,8 @@
 
 package org.bitbuckets.frc2016;
 
+import org.bitbuckets.frc2016.commands.goFertyFaav;
+import org.bitbuckets.frc2016.commands.goJuanAidy;
 import org.bitbuckets.frc2016.commands.sMove;
 import org.bitbuckets.frc2016.subsystems.Drivey;
 import org.bitbuckets.frc2016.subsystems.Sucky;
@@ -42,6 +44,7 @@ public class Robot extends IterativeRobot {
 		chooser.addDefault("Default Auto", new sMove());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
+		
 	}
 
 	/**
@@ -108,17 +111,23 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 
-		drivey.driveCheez(oi.driver.getAxis(AxisType.kY), oi.driver.getAxis(AxisType.kX));
+		drivey.driveCheez(oi.driver.getAxis(AxisType.kY), oi.driver.getAxis(AxisType.kTwist));
+		//drivey.arcadeDrive(oi.driver.getAxis(AxisType.kY), oi.driver.getAxis(AxisType.kTwist));
 
-		sucky.setLifterMotor(oi.operator.getAxis(AxisType.kY));
+		//sucky.setLifterMotor(oi.operator.getAxis(AxisType.kY));
 
-		if (oi.intakeOutbutt.get() && !oi.intakeInbutt.get()) {
-			sucky.intakeOut();
-		} else if (oi.intakeInbutt.get()) {
-			sucky.intakeIn();
-		} else {
-			sucky.intakeOff();
-		}
+//		if (oi.intakeOutbutt.get() && !oi.intakeInbutt.get()) {
+//			sucky.intakeOut();
+//		} else if (oi.intakeInbutt.get()) {
+//			sucky.intakeIn();
+//		} else {
+//			sucky.intakeOff();
+//		}
+		
+		oi.fertyFaavButt.whenActive(new goFertyFaav());
+		oi.juanAidyButt.whenActive(new goJuanAidy());
+		
+	
 
 	}
 
