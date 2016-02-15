@@ -9,6 +9,10 @@ public class DriveStraight extends Command {
 	private int distance;
 	private long timeInit;
 
+	/**
+	 * 
+	 * @param dist
+	 */
 	public DriveStraight(int dist) {
 		distance = dist;
 	}

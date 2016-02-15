@@ -76,7 +76,7 @@ public class Constants {
 	/** The angle to set the servo to to lock the ratchet **/
 	public static final int WINCH_SERVO_LOCK_ANGLE = 80;
 	/** The speed to run the winch at **/
-	public static final double WINCH_SPEED = .75;
+	public static final double WINCH_SPEED = .50;
 	/** Time in ms to unlatch the winch ratchet **/
 	public static final int WINCH_UNLAT_TIME = 100;
 
