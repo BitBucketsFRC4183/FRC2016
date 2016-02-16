@@ -1,5 +1,7 @@
 package org.bitbuckets.frc2016.commands;
 
+import org.bitbuckets.frc2016.Constants;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -9,14 +11,13 @@ public class winchDisengage extends CommandGroup {
     
     public  winchDisengage() {
         // Add Commands here:
+    	addSequential(new SwarmyDown());
+    	long timeInit = System.currentTimeMillis();
+    	while(System.currentTimeMillis()-timeInit<=Constants.WINCH_UNLAT_TIME){
         addSequential(new SwarmyUnlatch());
-        try {
-			Thread.sleep(100);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        addSequential(new SwarmyUp());
+    	}
+        
+        addSequential(new SwarmyDown());
         // these will run in order.
 
         // To run multiple commands at the same time,

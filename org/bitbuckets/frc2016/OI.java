@@ -22,6 +22,9 @@ public class OI {
 
 	public Button winchUpButt = new JoystickButton(operator, 5);
 	public Button winchDownButt = new JoystickButton(operator, 6);
+	
+	public Button toggleSafeMode = new JoystickButton(operator, 8);
+	public Button unToggleSafeMode = new JoystickButton(operator, 9);
 
 	// There are a few additional built in buttons you can use. Additionally,
 	// by subclassing Button you can create custom triggers and bind those to

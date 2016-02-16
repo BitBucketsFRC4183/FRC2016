@@ -58,6 +58,8 @@ public class Constants {
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public static final double INTAKE_SPEED = 0.5;
+	public static final double SHOOTER1_SPEED = 1;
+	public static final double SHOOTER2_SPEED = 1;
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/** Multiply with a velocity in mm/s to get RPM of the wheels **/
@@ -72,13 +74,18 @@ public class Constants {
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/** The angle to set the servo to to unlock the ratchet **/
-	public static final int WINCH_SERVO_UNLOCK_ANGLE = 40;
+	public static final int WINCH_SERVO_UNLOCK_ANGLE = 45;
 	/** The angle to set the servo to to lock the ratchet **/
-	public static final int WINCH_SERVO_LOCK_ANGLE = 80;
+	public static final int WINCH_SERVO_LOCK_ANGLE = 135;
 	/** The speed to run the winch at **/
 	public static final double WINCH_SPEED = .50;
 	/** Time in ms to unlatch the winch ratchet **/
 	public static final int WINCH_UNLAT_TIME = 100;
+	/** Max current for winch motor **/
+	public static final int WINCH_MAX_CURRENT = 50;
+	/** Safe mode constant **/
+	public static final double SAFE_MODE = .5;
+	
 
 	public class Autonomous {
 		/** The driving velocity in MMS **/

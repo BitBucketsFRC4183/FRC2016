@@ -13,7 +13,7 @@ public class SwarmyDown extends Command {
 
 	@Override
 	protected void initialize() {
-		Robot.winchy.startMove(false);
+		Robot.winchy.setServo(false);
 		Robot.winchy.setSpeed(-1 * Constants.WINCH_SPEED);
 	}
 

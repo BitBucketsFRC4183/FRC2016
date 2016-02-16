@@ -25,6 +25,7 @@ public class SwarmyUp extends Command {
 	 */
 	@Override
 	protected void initialize() {
+		Robot.winchy.setServo(false);
 		Robot.winchy.setSpeed(Constants.WINCH_SPEED);
 	}
 

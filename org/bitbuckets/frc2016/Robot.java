@@ -112,16 +112,14 @@ public class Robot extends IterativeRobot {
 
 		drivey.driveCheez(oi.driver.getAxis(AxisType.kY), oi.driver.getAxis(AxisType.kTwist));
 
-		sucky.setLifterMotor(oi.operator.getAxis(AxisType.kY));
-
-		if (oi.intakeOutButt.get() && !oi.intakeInButt.get()) {
-			sucky.intakeOut();
-		} else if (oi.intakeInButt.get()) {
+		sucky.setLifterMotor((0.50)*oi.operator.getAxis(AxisType.kY));
+		
+		while(oi.intakeInButt.get()){
 			sucky.intakeIn();
-		} else {
-			sucky.intakeOff();
 		}
-
+		while(oi.intakeOutButt.get()){
+			sucky.intakeOut();
+		}
 	}
 
 	/**
