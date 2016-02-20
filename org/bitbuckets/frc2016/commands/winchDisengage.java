@@ -11,12 +11,13 @@ public class winchDisengage extends CommandGroup {
     
     public  winchDisengage() {
         // Add Commands here:
-    	addSequential(new SwarmyDown());
     	long timeInit = System.currentTimeMillis();
     	while(System.currentTimeMillis()-timeInit<=Constants.WINCH_UNLAT_TIME){
-        addSequential(new SwarmyUnlatch());
+    	addSequential(new SwarmyDown());
     	}
-        
+
+        addSequential(new SwarmyUnlatch());    	        
+        //Start running position PID here
         addSequential(new SwarmyDown());
         // these will run in order.
 

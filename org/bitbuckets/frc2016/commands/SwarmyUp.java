@@ -26,7 +26,8 @@ public class SwarmyUp extends Command {
 	@Override
 	protected void initialize() {
 		Robot.winchy.setServo(false);
-		Robot.winchy.setSpeed(Constants.WINCH_SPEED);
+		//Robot.winchy.setSpeed(Constants.WINCH_SPEED);
+		Robot.winchy.setPID(0.5, 0, 0, Robot.winchy.motor1Enc()+20);
 	}
 
 	/**
@@ -35,7 +36,8 @@ public class SwarmyUp extends Command {
 	 */
 	@Override
 	protected void execute() {
-		Robot.winchy.setSpeed(Constants.WINCH_SPEED);
+		//Robot.winchy.setSpeed(Constants.WINCH_SPEED);
+		Robot.winchy.enablePID();
 	}
 
 	/**

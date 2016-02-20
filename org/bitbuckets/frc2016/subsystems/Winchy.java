@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Winchy extends Subsystem {
 
@@ -21,11 +22,6 @@ public class Winchy extends Subsystem {
 		motor1 = new CANTalon(RobotMap.winchMotor1);
 		motor2 = new CANTalon(RobotMap.winchMotor2);
 		lock = new Servo(RobotMap.winchServo);
-		
-		motor1.changeControlMode(TalonControlMode.Position);
-		//motor1.setP();
-		motor2.changeControlMode(TalonControlMode.Follower);
-		motor2.set(RobotMap.winchMotor1);
 	}
 
 	public void setSpeed(double speed) {
@@ -52,6 +48,32 @@ public class Winchy extends Subsystem {
 		} else{
 			lock.setAngle(Constants.WINCH_SERVO_UNLOCK_ANGLE);
 		}
+	}
+	
+	public int motor1Enc(){
+		return motor1.getEncPosition();
+	}
+	
+	public void setPID(double P, double I, double D, int setPoint ){
+		motor1.changeControlMode(TalonControlMode.Position);
+		motor1.configEncoderCodesPerRev(Constants.DRIVE_ENC_CPR);
+		motor2.changeControlMode(TalonControlMode.Follower);
+		motor2.set(RobotMap.winchMotor1);
+		motor1.setP(P);
+		motor1.setI(I);
+		motor1.setD(D);
+		
+		motor1.setSetpoint(setPoint);
+		//motor1.setFeedbackDevice(CANTalon.);
+		SmartDashboard.putNumber("Pos", motor1.getEncPosition());
+	}
+	
+	public void enablePID(){
+		motor1.enable();
+	}
+	
+	public void endMove(){
+		setServo(true);
 	}
 
 }

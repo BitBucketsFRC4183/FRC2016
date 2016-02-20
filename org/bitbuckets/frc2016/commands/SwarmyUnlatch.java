@@ -57,7 +57,7 @@ public class SwarmyUnlatch extends Command {
 	 */
 	@Override
 	protected void end() {
-		Robot.winchy.startMove(true);
+		Robot.winchy.setServo(true);
 		Robot.winchy.setSpeed(0);
 	}
 
