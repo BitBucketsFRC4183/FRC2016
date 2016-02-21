@@ -40,9 +40,36 @@ public class Drivey extends Subsystem {
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
 	}
+	
+//	public void driveCheez(double speed, double radius) {
+//		driveWRPM((int) (speed * Constants.MAX_WRPM), (speed / radius) * 60);
+//	}
+	
+	public double skim(double v) {
+		  // gain determines how much to skim off the top
+		if (v > 1.0)
+			return -((v - 1.0) * Constants.CHEZ_GAIN);
+		else if (v < -1.0)
+		    return -((v + 1.0) * Constants.CHEZ_GAIN);
+		return 0;
+		}
+	
+	public void driveCheez(double speed, double radius){
+		double t_left = speed + radius;
+		double t_right = speed - radius;
 
-	public void driveCheez(double speed, double radius) {
-		driveWRPM((int) (speed * Constants.MAX_WRPM), (speed / radius) * 60);
+		double left = t_left + skim(t_right);
+		double right = t_right + skim(t_left);
+		
+		if(speed==0){
+			left=1;
+			right=1;
+		}
+		
+		left1.set(left);
+		left2.set(left);
+		right1.set(right);
+		right2.set(right);
 	}
 
 	/**

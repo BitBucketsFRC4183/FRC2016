@@ -86,7 +86,9 @@ public class Constants {
 	/** Safe mode constant **/
 	public static final double SAFE_MODE = .5;
 	
-
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////
+	public static final double CHEZ_GAIN = 1.0;
+	
 	public class Autonomous {
 		/** The driving velocity in MMS **/
 		public static final int DRIVE_VEL = 25;

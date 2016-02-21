@@ -13,7 +13,7 @@ public class winchDisengage extends CommandGroup {
         // Add Commands here:
     	long timeInit = System.currentTimeMillis();
     	while(System.currentTimeMillis()-timeInit<=Constants.WINCH_UNLAT_TIME){
-    	addSequential(new SwarmyDown());
+    		addSequential(new SwarmyDown());
     	}
 
         addSequential(new SwarmyUnlatch());    	        
