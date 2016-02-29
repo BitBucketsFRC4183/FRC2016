@@ -7,16 +7,16 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class SwarmyUnlatch extends Command {
+public class SwarmyLatch extends Command {
 
-    public SwarmyUnlatch() {
+    public SwarmyLatch() {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.winchy);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.winchy.setServo(false);
+    	Robot.winchy.setServo(true);
     }
 
     // Called repeatedly when this Command is scheduled to run

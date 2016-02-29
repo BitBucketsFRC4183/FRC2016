@@ -1,19 +1,19 @@
 package org.bitbuckets.frc2016.commands;
 
-import org.bitbuckets.frc2016.Constants;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class winchEngage extends CommandGroup {
+public class SwarmyMoveToPos extends CommandGroup {
     
-    public  winchEngage() {
+	public int pos;
+	
+    public  SwarmyMoveToPos(int pos) {
+    	this.pos = pos;
         // Add Commands here:
-    	addSequential(new SwarmyOff());
-        addSequential(new SwarmyLatch());
-
+    	addSequential(new SwarmyPrep());
+        addSequential(new SwarmySetPos(pos));
         // these will run in order.
 
         // To run multiple commands at the same time,

@@ -17,11 +17,19 @@ public class OI {
 	public Joystick driver = new Joystick(0);
 	public Joystick operator = new Joystick(1);
 
-	public Button intakeOutButt = new JoystickButton(operator, 2);
-	public Button intakeInButt = new JoystickButton(operator, 3);
+//	public Button intakeOutButt = new JoystickButton(operator, 2);
+//	public Button intakeInButt = new JoystickButton(operator, 3);
+	
+	public Button shootButt = new JoystickButton(operator,5);
+	public Button unShootButt = new JoystickButton(operator,6);
 
-	public Button winchUpButt = new JoystickButton(operator, 5);
-	public Button winchDownButt = new JoystickButton(operator, 6);
+	public Button winchUpButt = new JoystickButton(operator, 3);
+	public Button winchDownButt = new JoystickButton(operator, 4);
+	
+	//public Button engageButt = new JoystickButton(operator, 5);
+	//public Button disengageButt = new JoystickButton(operator, 6);
+	
+	//public Button prepButt = new JoystickButton(operator,7);
 	
 	public Button toggleSafeMode = new JoystickButton(operator, 9);
 	public Button unToggleSafeMode = new JoystickButton(operator, 10);

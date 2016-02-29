@@ -11,27 +11,17 @@ public class RobotMap {
 	// following variables to use with your drivetrain subsystem.
 	public static int leftMotor1 = 2;
 	public static int leftMotor2 = 1;
-	public static int rightMotor1 = 3;
-	public static int rightMotor2 = 4;
+	public static int rightMotor1 = 9;
+	public static int rightMotor2 = 10;
 
-	/**
-	 * For the sucky subsystem
-	 */
-	public static int rollMotor = 32;
-	public static int liftMotor = 25;
-
-	/**
-	 * For the winchy subsystem
-	 */
-	public static int winchMotor1 = 22;
-	public static int winchMotor2 = 26;
-	public static int winchServo = 0;
+	public static int rollMotor = 5;
 	
-	/**
-	 * for shooty subsystem
-	 */
-	public static int shootyMotor1 = 69;
-	public static int shootyMotor2 = 70;
+	public static int shootMotor1 = 7;
+	public static int shootMotor2 = 6;
+	
+	public static int winchMotor1 = 4;
+	public static int winchMotor2 = 3;
+	public static int winchServo = 0;
 	// If you are using multiple modules, make sure to define both the port
 	// number and the module. For example you with a rangefinder:
 	// public static int rangefinderPort = 1;

@@ -1,12 +1,18 @@
 
 package org.bitbuckets.frc2016;
 
+import org.bitbuckets.frc2016.commands.startShoot;
+import org.bitbuckets.frc2016.commands.stopShoot;
 import org.bitbuckets.frc2016.commands.autonomous.DriveStraight;
 import org.bitbuckets.frc2016.subsystems.Drivey;
+import org.bitbuckets.frc2016.subsystems.Shooty;
 import org.bitbuckets.frc2016.subsystems.Sucky;
 import org.bitbuckets.frc2016.subsystems.Winchy;
 
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Joystick.AxisType;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Command;
@@ -27,23 +33,43 @@ public class Robot extends IterativeRobot {
 	public static final Drivey drivey = new Drivey();
 	public static final Sucky sucky = new Sucky();
 	public static final Winchy winchy = new Winchy();
-
+	public static final Shooty shooty = new Shooty();
+	
+	//public static TeensyIMU teensyIMU = new TeensyIMU();
+	
+	public static PowerDistributionPanel pdp;
+	
 	public static OI oi;
+	
+	//Talons for arcade drive
+	public CANTalon right1 = new CANTalon(RobotMap.rightMotor1);
+	public CANTalon right2 = new CANTalon(RobotMap.rightMotor2);
+	public CANTalon left1 = new CANTalon(RobotMap.leftMotor1);
+	public CANTalon left2 = new CANTalon(RobotMap.leftMotor2);
 
 	Command autonomousCommand;
 	SendableChooser chooser;
 	RobotDrive rDrive;
+	
+	public AnalogInput lightSensor = new AnalogInput(1);
 
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
+		System.out.println("initializing robot");
 		oi = new OI();
 		chooser = new SendableChooser();
-		chooser.addDefault("Default Auto", new DriveStraight(1500));
+		chooser.addDefault("Default Auto", new DriveStraight(20));
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
+		
+		rDrive = new RobotDrive(left1, left2, right1, right2);
+		pdp = new PowerDistributionPanel();
+//		teensyIMU.init();
+//		teensyIMU.startData();
+		
 	}
 
 	/**
@@ -83,6 +109,8 @@ public class Robot extends IterativeRobot {
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null)
 			autonomousCommand.start();
+		
+		//teensyIMU.magnoOff();
 	}
 
 	/**
@@ -91,8 +119,9 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 		long timeInit = System.currentTimeMillis();
-		if (System.currentTimeMillis() - timeInit >= 4000) {
-		}
+//		if (System.currentTimeMillis() - timeInit >= 4000) {
+//			drivey.driveWRPM(0.6, 0.0);
+//		}
 	}
 
 	public void teleopInit() {
@@ -102,6 +131,16 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
+
+		//teensyIMU.magnoOff();
+		
+		//oi.prepButt.whenPressed(new SwarmyPrep());
+		
+		//oi.engageButt.whenPressed(new SwarmyLatch());
+		//oi.disengageButt.whenPressed(new SwarmyUnlatch());
+		
+		oi.shootButt.whenPressed(new startShoot());
+		oi.unShootButt.whenPressed(new stopShoot());
 	}
 
 	/**
@@ -110,16 +149,42 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 
-		drivey.driveCheez(oi.driver.getAxis(AxisType.kY), oi.driver.getAxis(AxisType.kTwist));
-
-		sucky.setLifterMotor((0.50)*oi.operator.getAxis(AxisType.kY));
+		//Driving stuff
+		//drivey.driveCheez(oi.driver.getAxis(AxisType.kY), oi.driver.getAxis(AxisType.kZ));
+		rDrive.arcadeDrive(oi.driver.getAxis(AxisType.kY), oi.driver.getAxis(AxisType.kZ));
 		
-		while(oi.intakeInButt.get()){
-			sucky.intakeIn();
+		//Operator stuff
+		if(sucky.getCurrentCommand()==null){
+			if(oi.operator.getAxis(AxisType.kY)>0.5){
+				sucky.intakeIn();
+			}else if(oi.operator.getAxis(AxisType.kY)<-0.5){
+				sucky.intakeOut();
+			}else{
+				sucky.intakeOff();
+			}
 		}
-		while(oi.intakeOutButt.get()){
-			sucky.intakeOut();
+		
+		//Manual winch motor control
+		winchy.setSpeed(oi.operator.getAxis(AxisType.kZ));
+		
+		if(winchy.getLowSwitch()){
+			winchy.zeroEnc();
 		}
+		
+		//SmartDashboard.putNumber("Winch motor 1 current", Robot.pdp.getCurrent(Constants.WINCH_POWER_ONE));
+		//SmartDashboard.putNumber("Winch motor 2 current", Robot.pdp.getCurrent(Constants.WINCH_POWER_TWO));
+		SmartDashboard.putNumber("Winch motor 1 current", winchy.getCurrent1());
+		SmartDashboard.putNumber("Winch motor 2 current", winchy.getCurrent2());
+		
+		SmartDashboard.putNumber("Intake current", sucky.getCurrent());
+		
+		SmartDashboard.putNumber("Winch motor 1 enc", winchy.motor1Enc());
+		
+		SmartDashboard.putBoolean("Lower switch", winchy.getLowSwitch());
+		
+		SmartDashboard.putNumber("Ball sensor?", lightSensor.getVoltage());
+		
+		
 	}
 
 	/**
@@ -129,3 +194,4 @@ public class Robot extends IterativeRobot {
 		LiveWindow.run();
 	}
 }
+

@@ -58,8 +58,7 @@ public class Constants {
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public static final double INTAKE_SPEED = 0.5;
-	public static final double SHOOTER1_SPEED = 1;
-	public static final double SHOOTER2_SPEED = 1;
+	public static final double SHOOTER_SPEED = 1;
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/** Multiply with a velocity in mm/s to get RPM of the wheels **/
@@ -74,21 +73,60 @@ public class Constants {
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/** The angle to set the servo to to unlock the ratchet **/
-	public static final int WINCH_SERVO_UNLOCK_ANGLE = 45;
+	public static final int WINCH_SERVO_UNLOCK_ANGLE = 135;
 	/** The angle to set the servo to to lock the ratchet **/
-	public static final int WINCH_SERVO_LOCK_ANGLE = 135;
+	public static final int WINCH_SERVO_LOCK_ANGLE = 45;
+	
+	/** Shoot setpoint **/
+	public static final int WINCH_SHOOT_POS = 0;
+	/** Lift setpoint **/
+	public static final int WINCH_LIFT_POS = 0;
+	/** Ball sepoint **/
+	public static final int WINCH_INTAKE_POS = 0;
+	
 	/** The speed to run the winch at **/
-	public static final double WINCH_SPEED = .50;
+	public static final double WINCH_SPEED = 1.0;
+	/**The speed to run the winch before unlatching**/
+	public static final double WINCH_PREP_SPEED = 0.5;
+	
 	/** Time in ms to unlatch the winch ratchet **/
-	public static final int WINCH_UNLAT_TIME = 100;
+	public static final int WINCH_UNLAT_TIME = 50;
+	/**Time in ms to get to the ball grabbing position**/
+	public static final int SWARMY_DOWN_TIME = 300;
+	/**Time in ms to get to the up position**/
+	public static final int SWARMY_UP_TIME = 300;
+	/**Time in ms to wait after ball is detected on intake**/
+	public static final int INTAKE_TIMEOUT_TIME = 1000;
+	/**Time in ms for the ball to cease contact with the shooter**/
+	public static final int SHOOT_DELAY_TIME = 100;
+	
 	/** Max current for winch motor **/
 	public static final int WINCH_MAX_CURRENT = 50;
+	/** Max current for intake motor **/
+	public static final int INTAKE_MAX_CURRENT = 25;
 	/** Safe mode constant **/
 	public static final double SAFE_MODE = .5;
 	
-	///////////////////////////////////////////////////////////////////////////////////////////////////////////
+	/**Max voltage for winch motor**/
+	public static final int MAX_WINCH_VOLTAGE = 2;
+	
+/////////////////////////////////////////////Winch PID Values//////////////////////////////////////////////////////////////
+	public static final double WINCH_P = 2000/500000;
+	public static final double WINCH_I = 0;
+	public static final double WINCH_D = 0;
+	public static final double WINCH_ACCEPTANCE_RANGE = 10000;
+	
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public static final double CHEZ_GAIN = 1.0;
 	
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// POWER DISTRIBUTION BOARD CHANNELS/////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	/**Winch motor power channel one**/
+	public static final int WINCH_POWER_ONE = 1;
+	/**Winch motor power channel two**/
+	public static final int WINCH_POWER_TWO = 4;
+			
 	public class Autonomous {
 		/** The driving velocity in MMS **/
 		public static final int DRIVE_VEL = 25;

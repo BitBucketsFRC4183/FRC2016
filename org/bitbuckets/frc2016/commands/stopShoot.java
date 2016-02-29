@@ -7,26 +7,25 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class SwarmyUnlatch extends Command {
+public class stopShoot extends Command {
 
-    public SwarmyUnlatch() {
+    public stopShoot() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.winchy);
+        requires(Robot.shooty);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.winchy.setServo(false);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
+    	Robot.shooty.setMotor(0);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return false;
     }
 
     // Called once after isFinished returns true
