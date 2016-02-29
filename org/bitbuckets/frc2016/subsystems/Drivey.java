@@ -2,12 +2,14 @@
 package org.bitbuckets.frc2016.subsystems;
 
 import org.bitbuckets.frc2016.Constants;
+import org.bitbuckets.frc2016.Robot;
 import org.bitbuckets.frc2016.RobotMap;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 /**
  *
@@ -17,14 +19,20 @@ public class Drivey extends Subsystem {
 	private CANTalon right2;
 	private CANTalon left1;
 	private CANTalon left2;
+	
+	private double driveAngle;
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 	
 	private RobotDrive rDrive;
+	private NetworkTable imuData;
 
 	public Drivey() {
 		
+		
 		rDrive = new RobotDrive(left1,left2,right1,right2);
+		
+		imuData = NetworkTable.getTable("IMU Data 2");
 		
 		right1 = new CANTalon(RobotMap.rightMotor1);
 		right2 = new CANTalon(RobotMap.rightMotor2);
@@ -88,7 +96,4 @@ public class Drivey extends Subsystem {
 		}
 	}
 	
-	public void arcadeDrive(double move, double rotate){
-		rDrive.arcadeDrive(move, rotate);
-	}
 }

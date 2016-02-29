@@ -12,8 +12,6 @@ import jssc.SerialPortList;
 
 public class TeensyIMU {
 	
-	//private ByteBuffer readBuffer = ByteBuffer.allocateDirect(1024);
-	//private ByteBuffer writeBuffer = ByteBuffer.allocateDirect(1024);
 	private SerialPort serialPort;
 	public NetworkTable imuData;
 	private final int IMUMESSAGELEN = 39;
@@ -25,7 +23,7 @@ public class TeensyIMU {
 
 	    try {
 	    	System.out.println("Opening serial port...");
-	        serialPort.openPort();//Open serial portx
+	        serialPort.openPort();//Open serial port
 	        
 	        System.out.println("Setting serial port params");
 	        serialPort.setParams(serialPort.BAUDRATE_115200, serialPort.DATABITS_8, 
@@ -182,4 +180,8 @@ public class TeensyIMU {
 		
 		return bytes[0];	
 	}
+
+//	public double getYaw(){
+//		return imuData.getNumber("Yaw");
+//	}
 }
