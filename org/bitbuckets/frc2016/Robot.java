@@ -1,14 +1,36 @@
 
 package org.bitbuckets.frc2016;
 
-import org.bitbuckets.frc2016.commands.sMove;
+import org.bitbuckets.frc2016.commands.ClosePort;
+import org.bitbuckets.frc2016.commands.OpenPort;
+import org.bitbuckets.frc2016.commands.SwarmyTeleop;
+import org.bitbuckets.frc2016.commands.startShoot;
+import org.bitbuckets.frc2016.commands.stopShoot;
+import org.bitbuckets.frc2016.commands.PrepUnlatch;
+import org.bitbuckets.frc2016.commands.SwarmyLatch;
+import org.bitbuckets.frc2016.commands.SwarmyMoveToPos;
+import org.bitbuckets.frc2016.commands.SwarmyPrep;
+import org.bitbuckets.frc2016.commands.SwarmySetPos;
+import org.bitbuckets.frc2016.commands.SwarmyUnlatch;
+import org.bitbuckets.frc2016.commands.winchDisengage;
+import org.bitbuckets.frc2016.commands.winchEngage;
+import org.bitbuckets.frc2016.commands.autonomous.DriveStraight;
+import org.bitbuckets.frc2016.commands.autonomous.LowBarAuto;
+import org.bitbuckets.frc2016.commands.autonomous.OtherDefensesAuto;
 import org.bitbuckets.frc2016.subsystems.Drivey;
+import org.bitbuckets.frc2016.subsystems.Shooty;
 import org.bitbuckets.frc2016.subsystems.Sucky;
+import org.bitbuckets.frc2016.subsystems.Winchy;
 
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Joystick.AxisType;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -25,23 +47,55 @@ public class Robot extends IterativeRobot {
 
 	public static final Drivey drivey = new Drivey();
 	public static final Sucky sucky = new Sucky();
-
+	public static final Winchy winchy = new Winchy();
+	public static final Shooty shooty = new Shooty();
+	
+	//public static TeensyIMU teensyIMU;
+	
+	public static PowerDistributionPanel pdp;
+	
 	public static OI oi;
+	
+//	//Talons for arcade drive
+//	public CANTalon right1;
+//	public CANTalon right2;
+//	public CANTalon left1;
+//	public CANTalon left2;
 
 	Command autonomousCommand;
 	SendableChooser chooser;
-	RobotDrive rDrive;
+//	RobotDrive rDrive;
+	
+	CameraServer server;
 
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
+		System.out.println("initializing robot");
+//		teensyIMU = new TeensyIMU();
 		oi = new OI();
 		chooser = new SendableChooser();
-		chooser.addDefault("Default Auto", new sMove());
-		// chooser.addObject("My Auto", new MyAutoCommand());
+		chooser.addDefault("Low bar auto", new LowBarAuto());
+		chooser.addObject("OtherDefensesAuto", new OtherDefensesAuto());
 		SmartDashboard.putData("Auto mode", chooser);
+		
+//		right1 = new CANTalon(RobotMap.rightMotor1);
+//		right2 = new CANTalon(RobotMap.rightMotor1);
+//		left1 = new CANTalon(RobotMap.leftMotor1);
+//		left2 = new CANTalon(RobotMap.leftMotor1);
+//		
+//		rDrive = new RobotDrive(left1, left2, right1, right2);
+		pdp = new PowerDistributionPanel();
+//		teensyIMU.init();
+//		teensyIMU.startData();
+		
+		server = CameraServer.getInstance();
+        server.setQuality(50);
+        //the camera name (ex "cam0") can be found through the roborio web interface
+        server.startAutomaticCapture("cam0");
+		
 	}
 
 	/**
@@ -50,7 +104,8 @@ public class Robot extends IterativeRobot {
 	 * the robot is disabled.
 	 */
 	public void disabledInit() {
-
+		winchy.disablePID();
+		winchy.setvBusMode();
 	}
 
 	public void disabledPeriodic() {
@@ -81,6 +136,8 @@ public class Robot extends IterativeRobot {
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null)
 			autonomousCommand.start();
+		
+		//teensyIMU.magnoOff();
 	}
 
 	/**
@@ -88,9 +145,9 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		long timeInit = System.currentTimeMillis();
-		if (System.currentTimeMillis() - timeInit >= 4000) {
-		}
+		
+		if(drivey.getCurrentCommand()!=null)
+			SmartDashboard.putString("Current Command", drivey.getCurrentCommand().toString());
 	}
 
 	public void teleopInit() {
@@ -100,6 +157,27 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
+
+		//teensyIMU.magnoOff();
+		
+		//oi.prepButt.whenPressed(new SwarmyPrep());
+		
+//		oi.engageButt.whenPressed(new SwarmyLatch());
+//		oi.disengageButt.whenPressed(new PrepUnlatch());
+		oi.engageButt.whenPressed(new SwarmyTeleop());
+		oi.engageButt.whenReleased(new SwarmyLatch());
+		
+		//oi.prepButt.whenPressed(new PrepUnlatch());
+		//oi.zeroButt.whenPressed(new zeroArm());
+		oi.portButton.whenPressed(new OpenPort());
+		oi.portButton.whenReleased(new ClosePort());
+		
+		oi.spoolButt.whenPressed(new startShoot());
+		oi.unShootButt.whenPressed(new stopShoot());
+		
+		oi.winchShootButt.whenPressed(new SwarmyMoveToPos(Constants.WINCH_SHOOT_POS));
+		oi.winchIntakeButt.whenPressed(new SwarmyMoveToPos(Constants.WINCH_INTAKE_POS));
+		oi.winchLiftButt.whenPressed(new SwarmyMoveToPos(Constants.WINCH_LIFT_POS));
 	}
 
 	/**
@@ -108,18 +186,47 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 
-		drivey.driveCheez(oi.driver.getAxis(AxisType.kY), oi.driver.getAxis(AxisType.kX));
-
-		sucky.setLifterMotor(oi.operator.getAxis(AxisType.kY));
-
-		if (oi.intakeOutbutt.get() && !oi.intakeInbutt.get()) {
-			sucky.intakeOut();
-		} else if (oi.intakeInbutt.get()) {
-			sucky.intakeIn();
-		} else {
-			sucky.intakeOff();
+		//Driving stuff
+		drivey.arcadeDrive(oi.driver.getAxis(AxisType.kY) * (oi.slowMoButt.get() ? 0.5 : 1.0),
+				Math.pow(oi.driver.getAxis(AxisType.kZ), 2)*Math.signum(oi.driver.getAxis(AxisType.kZ))*(oi.slowMoButt.get() ? 0.5 : 1.0));
+		
+		//Operator stuff
+		if(sucky.getCurrentCommand()==null){
+			if(oi.operator.getAxis(AxisType.kY)>0.5){
+				sucky.intakeIn();
+			}else if(oi.operator.getAxis(AxisType.kY)<-0.5){
+				sucky.intakeOut();
+			}else{
+				sucky.intakeOff();
+			}
 		}
-
+		//Manual winch motor control
+			//winchy.setSetpoint(winchy.getSetpoint()+300.0*oi.operator.getAxis(AxisType.kZ));
+			//winchy.setSpeed(-oi.operator.getAxis(AxisType.kZ));	
+		
+		if(winchy.getLowSwitch()){
+			winchy.zeroEnc();
+		}
+		
+		SmartDashboard.putNumber("Winch motor 1 current", Robot.pdp.getCurrent(Constants.WINCH_POWER_ONE));
+		SmartDashboard.putNumber("Winch motor 1 voltage", winchy.getVoltage1());
+		SmartDashboard.putNumber("Intake current", sucky.getCurrent());
+		
+		SmartDashboard.putNumber("Winch motor 1 enc", winchy.motor1Enc());
+		SmartDashboard.putBoolean("Lower switch", winchy.getLowSwitch());
+		SmartDashboard.putBoolean("Latch switch", winchy.getLatchSwitch());
+		
+		if(winchy.getCurrentCommand()!=null)
+		SmartDashboard.putString("Current Command", winchy.getCurrentCommand().toString());
+		
+		SmartDashboard.putNumber("Servo angle", winchy.getServoAngle());
+		
+		SmartDashboard.putBoolean("Motor control", winchy.isEnabled());
+		SmartDashboard.putNumber("Winch joystick", oi.operator.getAxis(AxisType.kZ));
+		SmartDashboard.putNumber("PID Error", winchy.getError());
+		SmartDashboard.putNumber("PID Output", winchy.getPIDOutput());
+		SmartDashboard.putNumber("PID Setpoint", winchy.getSetpoint());
+		
 	}
 
 	/**
@@ -129,3 +236,4 @@ public class Robot extends IterativeRobot {
 		LiveWindow.run();
 	}
 }
+

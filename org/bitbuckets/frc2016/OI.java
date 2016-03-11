@@ -14,11 +14,30 @@ public class OI {
 	//// joystick.
 	// You create one by telling it which joystick it's on and which button
 	// number it is.
-	Joystick driver = new Joystick(0);
-	Joystick operator = new Joystick(1);
+	public Joystick driver = new Joystick(0);
+	public Joystick operator = new Joystick(1);
 
-	Button intakeOutbutt = new JoystickButton(operator, 2);
-	Button intakeInbutt = new JoystickButton(operator, 3);
+//	public Button intakeOutButt = new JoystickButton(operator, 2);
+//	public Button intakeInButt = new JoystickButton(operator, 3);
+	
+	public Button spoolButt = new JoystickButton(operator,5);
+	public Button unShootButt = new JoystickButton(operator,6);
+	public Button shootButt = new JoystickButton(operator,2);
+	
+	public Button slowMoButt = new JoystickButton(driver, 6);
+	
+	public Button winchLiftButt = new JoystickButton(operator, 3);
+	public Button winchShootButt = new JoystickButton(operator, 4);
+	public Button winchIntakeButt = new JoystickButton(operator, 1);
+	
+	//public Button prepButt = new JoystickButton(operator, 1);
+	//public Button zeroButt = new JoystickButton(operator, 14);
+	public Button portButton = new JoystickButton(operator, 14);
+	
+	public Button engageButt = new JoystickButton(operator, 9);
+	public Button disengageButt = new JoystickButton(operator, 10);
+	
+	//public Button winchPIDButt = new JoystickButton(operator,9);
 
 	// There are a few additional built in buttons you can use. Additionally,
 	// by subclassing Button you can create custom triggers and bind those to
