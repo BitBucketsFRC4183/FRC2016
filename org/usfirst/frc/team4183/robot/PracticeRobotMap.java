@@ -14,16 +14,19 @@ public class PracticeRobotMap {
 	public static int rightMotor1 = 9;
 	public static int rightMotor2 = 10;
 
-	public static int rollMotor = 5;
+	public static int rollMotor = 6;
 	
-	public static int portMotor = 8;
+	public static int portMotor = 5;
 	
-	public static int shootMotor1 = 3;
-	public static int shootMotor2 = 4;
+	public static int shootMotor1 = 8;
+	public static int shootMotor2 = 7;
 	
 	public static int winchMotor1 = 3;
 	public static int winchMotor2 = 4;
 	public static int winchServo = 3;
+	
+	public static int lowLimit = 0;
+	public static int servoSwitch = 1;
 	// If you are using multiple modules, make sure to define both the port
 	// number and the module. For example you with a rangefinder:
 	// public static int rangefinderPort = 1;

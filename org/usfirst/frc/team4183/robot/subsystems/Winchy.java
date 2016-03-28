@@ -2,7 +2,7 @@ package org.usfirst.frc.team4183.robot.subsystems;
 
 import org.usfirst.frc.team4183.robot.Constants;
 import org.usfirst.frc.team4183.robot.Robot;
-import org.usfirst.frc.team4183.robot.CompRobotMap;
+import org.usfirst.frc.team4183.robot.PracticeRobotMap;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
@@ -17,14 +17,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Winchy extends Subsystem {
 
-	private CANTalon motor1 = new CANTalon(CompRobotMap.winchMotor1);
-	private CANTalon motor2 = new CANTalon(CompRobotMap.winchMotor2);
+	private CANTalon motor1 = new CANTalon(PracticeRobotMap.winchMotor1);
+	private CANTalon motor2 = new CANTalon(PracticeRobotMap.winchMotor2);
 	private PIDController pidControl;
 	private double setPoint;
-	private Servo lock = new Servo(CompRobotMap.winchServo);
-	private DigitalInput lowLimit = new DigitalInput(0);
-	private DigitalInput highLimit = new DigitalInput(1);
-	private DigitalInput servoSwitch = new DigitalInput(2);
+	private Servo lock = new Servo(PracticeRobotMap.winchServo);
+	private DigitalInput lowLimit = new DigitalInput(PracticeRobotMap.lowLimit);
+	//private DigitalInput highLimit = new DigitalInput(1);
+	private DigitalInput servoSwitch = new DigitalInput(PracticeRobotMap.servoSwitch);
 	//private boolean isSafe = false;
 	
 	public Winchy(){
@@ -32,12 +32,12 @@ public class Winchy extends Subsystem {
 		motor2.configMaxOutputVoltage(Constants.MAX_WINCH_VOLTAGE);
 		
 		motor2.changeControlMode(TalonControlMode.Follower);
-		motor2.set(CompRobotMap.winchMotor1);
+		motor2.set(PracticeRobotMap.winchMotor1);
 		
 		pidControl = new PIDController(Constants.WINCH_P, 
 				Constants.WINCH_I, Constants.WINCH_D, motor1, motor1, Constants.WINCH_PID_PERIOD);
 		
-		pidControl.setOutputRange(-0.2, 0.5);
+		pidControl.setOutputRange(-0.15, 0.4);
 	}
 	
 	@Override
@@ -68,7 +68,8 @@ public class Winchy extends Subsystem {
 	
 	public void setvBusMode(){
 		motor1.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
-		motor2.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+		motor2.changeControlMode(CANTalon.TalonControlMode.Follower);
+		motor2.set(motor1.getDeviceID());
 	}
 	
 	public void setLock(double pos){
@@ -139,9 +140,9 @@ public class Winchy extends Subsystem {
 	}
 	
 	public void setPID(double P, double I, double D, int setPoint){
-		motor1.changeControlMode(CANTalon.TalonControlMode.Position);
-		motor2.changeControlMode(CANTalon.TalonControlMode.Follower);
-		motor2.set(motor1.getDeviceID());
+//		motor1.changeControlMode(CANTalon.TalonControlMode.Position);
+//		motor2.changeControlMode(CANTalon.TalonControlMode.Follower);
+//		motor2.set(motor1.getDeviceID());
 		pidControl.setPID(P, I, D);
 		pidControl.setSetpoint(setPoint);
 	}

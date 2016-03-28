@@ -1,6 +1,6 @@
 package org.usfirst.frc.team4183.robot.subsystems;
 
-import org.usfirst.frc.team4183.robot.CompRobotMap;
+import org.usfirst.frc.team4183.robot.PracticeRobotMap;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -9,8 +9,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class Shooty extends Subsystem {
-    private CANTalon motor1 = new CANTalon(CompRobotMap.shootMotor1);
-    private CANTalon motor2 = new CANTalon(CompRobotMap.shootMotor2);
+    private CANTalon motor1 = new CANTalon(PracticeRobotMap.shootMotor1);
+    private CANTalon motor2 = new CANTalon(PracticeRobotMap.shootMotor2);
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 

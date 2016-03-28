@@ -15,12 +15,11 @@ public class SwarmySetPos extends Command {
 
 	@Override
 	protected void initialize() {
-		if(!Robot.winchy.getLatchSwitch()){
+//		if(!Robot.winchy.getLatchSwitch()){
 			Robot.winchy.setPID(Constants.WINCH_P, Constants.WINCH_I, Constants.WINCH_D, pos);
 			Robot.winchy.enableMotors();
 			Robot.winchy.enablePID();
-
-		}
+//		}
 	}
 
 	@Override
@@ -32,8 +31,9 @@ public class SwarmySetPos extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		return Math.abs(pos-Robot.winchy.motor1Enc())<Constants.WINCH_ACCEPTANCE_RANGE 
-				|| Robot.winchy.getLatchSwitch();
+//		return Math.abs(pos-Robot.winchy.motor1Enc())<Constants.WINCH_ACCEPTANCE_RANGE 
+//				|| Robot.winchy.getLatchSwitch();
+		return Math.abs(pos-Robot.winchy.motor1Enc())<Constants.WINCH_ACCEPTANCE_RANGE;
 	}
 
 	@Override

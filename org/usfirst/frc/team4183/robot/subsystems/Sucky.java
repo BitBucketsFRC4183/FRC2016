@@ -2,7 +2,7 @@ package org.usfirst.frc.team4183.robot.subsystems;
 
 import org.usfirst.frc.team4183.robot.Constants;
 import org.usfirst.frc.team4183.robot.Robot;
-import org.usfirst.frc.team4183.robot.CompRobotMap;
+import org.usfirst.frc.team4183.robot.PracticeRobotMap;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -11,8 +11,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class Sucky extends Subsystem {
-	private CANTalon roll = new CANTalon(CompRobotMap.rollMotor);
-	private CANTalon port = new CANTalon(CompRobotMap.portMotor);
+	private CANTalon roll = new CANTalon(PracticeRobotMap.rollMotor);
+	private CANTalon port = new CANTalon(PracticeRobotMap.portMotor);
 	private long currentTimeout = 0;
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.

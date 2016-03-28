@@ -78,19 +78,19 @@ public class Constants {
 	public static final int WINCH_SERVO_LOCK_ANGLE = 140;
 	
 	/** Shoot setpoint **/
-	public static final int WINCH_SHOOT_POS = -75000;
+	public static final int WINCH_SHOOT_POS = -11435;
 	/** Lift setpoint **/
-	public static final int WINCH_LIFT_POS = -450000;
+	public static final int WINCH_LIFT_POS = -35000;
 	/** Ball sepoint **/
-	public static final int WINCH_INTAKE_POS = -2000;
+	public static final int WINCH_INTAKE_POS = -200;
 	
 	/** The speed to run the winch at **/
-	public static final double WINCH_SPEED = 0.50;
+	public static final double WINCH_SPEED = 0.40;
 	/**The speed to run the winch before unlatching**/
 	public static final double WINCH_PREP_SPEED = 0.85;
 	
 	/** Time in ms to unlatch the winch ratchet **/
-	public static final int WINCH_UNLAT_TIME = 75;
+	public static final int WINCH_UNLAT_TIME = 50;
 	/**Time in ms to get to the ball grabbing position**/
 	public static final int SWARMY_DOWN_TIME = 3000;
 	/**Time in ms to get to the up position**/
@@ -98,12 +98,12 @@ public class Constants {
 	/**Time in ms to wait after ball is detected on intake**/
 	public static final int INTAKE_TIMEOUT_TIME = 1000;
 	/**Time in ms for the ball to cease contact with the shooter**/
-	public static final int SHOOT_DELAY_TIME = 70;
+	public static final int SHOOT_DELAY_TIME = 100;
 	
 	/** Max current for winch motor **/
 	public static final int WINCH_MAX_CURRENT = 50;
 	/** Max current for intake motor **/
-	public static final int INTAKE_MAX_CURRENT = 40;
+	public static final int INTAKE_MAX_CURRENT = 55;
 	/** Safe mode constant **/
 	public static final double SAFE_MODE = .5;
 	
@@ -111,11 +111,11 @@ public class Constants {
 	public static final int MAX_WINCH_VOLTAGE = 2;
 	
 /////////////////////////////////////////////Winch PID Values///////////////// /////////////////////////////////////////////
-	public static final double WINCH_P = 5.0/500000.0;
+	public static final double WINCH_P = 17.5/50000.0;
 	//public static final double WINCH_I = 0.001/50000.0;
-	public static final double WINCH_I = 0;
-	public static final double WINCH_D = 0;
-	public static final double WINCH_ACCEPTANCE_RANGE = 10000;
+	public static final double WINCH_I = 0.1/50000.0;
+	public static final double WINCH_D = 0.0/50000.0;
+	public static final double WINCH_ACCEPTANCE_RANGE = 400;
 	public static final double WINCH_PID_PERIOD = 0.01;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public static final double CHEZ_GAIN = 1.0;

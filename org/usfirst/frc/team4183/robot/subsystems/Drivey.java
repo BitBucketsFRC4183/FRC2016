@@ -2,7 +2,8 @@
 package org.usfirst.frc.team4183.robot.subsystems;
 
 import org.usfirst.frc.team4183.robot.Constants;
-import org.usfirst.frc.team4183.robot.CompRobotMap;
+import org.usfirst.frc.team4183.robot.PracticeRobotMap;
+import org.usfirst.frc.team4183.robot.PracticeRobotMap;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
@@ -24,10 +25,10 @@ public class Drivey extends Subsystem {
 	// here. Call these from Commands.
 
 	public Drivey() {
-		right1 = new CANTalon(CompRobotMap.rightMotor1);
-		right2 = new CANTalon(CompRobotMap.rightMotor2);
-		left1 = new CANTalon(CompRobotMap.leftMotor1);
-		left2 = new CANTalon(CompRobotMap.leftMotor2);
+		right1 = new CANTalon(PracticeRobotMap.rightMotor1);
+		right2 = new CANTalon(PracticeRobotMap.rightMotor2);
+		left1 = new CANTalon(PracticeRobotMap.leftMotor1);
+		left2 = new CANTalon(PracticeRobotMap.leftMotor2);
 		
 		robotDrive = new RobotDrive(left1,left2,right1,right2);
 		//position = NetworkTable.getTable("Enc Values");
