@@ -69,7 +69,9 @@ public class Constants {
 	/** The counts per revolution of the encoders on the drive motor **/
 	public static final int DRIVE_ENC_CPR = 1000;
 
-	public static final double DRIVE_KANGLE = 1;
+	public static final double DRIVE_KANGLE = 0.005;
+	
+	public static final double DESIRED_ANGLE = 1.57;
            
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/** The angle to set the servo to to unlock the ratchet **/
@@ -77,15 +79,17 @@ public class Constants {
 	/** The angle to set the servo to to lock the ratchet **/
 	public static final int WINCH_SERVO_LOCK_ANGLE = 140;
 	
-	/** Shoot setpoint **/
-	public static final int WINCH_SHOOT_POS = -11435;
+	/** Shooting from batter setpoint **/
+	public static final int WINCH_SHOOT_BATTER = -18378;
+	/** Shooting from outerworks setpoint**/
+	public static final int WINCH_SHOOT_OUTERWORKS = -38740;
 	/** Lift setpoint **/
 	public static final int WINCH_LIFT_POS = -35000;
 	/** Ball sepoint **/
-	public static final int WINCH_INTAKE_POS = -200;
+	public static final int WINCH_INTAKE_POS = -1000;
 	
 	/** The speed to run the winch at **/
-	public static final double WINCH_SPEED = 0.40;
+	public static final double WINCH_SPEED = 0.55;
 	/**The speed to run the winch before unlatching**/
 	public static final double WINCH_PREP_SPEED = 0.85;
 	
@@ -98,7 +102,7 @@ public class Constants {
 	/**Time in ms to wait after ball is detected on intake**/
 	public static final int INTAKE_TIMEOUT_TIME = 1000;
 	/**Time in ms for the ball to cease contact with the shooter**/
-	public static final int SHOOT_DELAY_TIME = 100;
+	public static final int SHOOT_DELAY_TIME = 200;
 	
 	/** Max current for winch motor **/
 	public static final int WINCH_MAX_CURRENT = 50;
@@ -132,7 +136,7 @@ public class Constants {
 		/** The driving velocity in MMS **/
 		public static final int DRIVE_VEL = 25;
 
-		public static final double DRIVE_ANGLE_COEFFICIENT = 180;
+		public static final double DRIVE_ANGLE_COEFFICIENT = 0.005;
 	}
 
 }

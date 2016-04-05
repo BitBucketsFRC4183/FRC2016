@@ -12,11 +12,12 @@ public class SwarmyIntakeIn extends Command {
     public SwarmyIntakeIn() {
         // Use requires() here to declare subsystem dependencies
          requires(Robot.sucky);
+         requires(Robot.shooty);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	
+    	Robot.shooty.setBreak(true);
     }
 
     // Called repeatedly when this Command is scheduled to run

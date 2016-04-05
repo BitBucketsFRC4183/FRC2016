@@ -179,9 +179,10 @@ public class Robot extends IterativeRobot {
 		oi.intakeInButt.whenReleased(new SwarmyIntakeOff());
 		oi.intakeOutButt.whenReleased(new SwarmyIntakeOff());
 		
-		oi.winchShootButt.whenPressed(new SwarmyMoveToPos(Constants.WINCH_SHOOT_POS));
-		oi.winchIntakeButt.whenPressed(new zeroArm(0));
-		oi.winchLiftButt.whenPressed(new SwarmyMoveToPos(Constants.WINCH_LIFT_POS));
+		oi.winchShootButt.whenPressed(new SwarmyMoveToPos(Constants.WINCH_SHOOT_BATTER));
+		oi.winchZeroButt.whenPressed(new zeroArm(0));
+		//oi.winchIntakeButt.whenPressed(new SwarmyMoveToPos(Constants.WINCH_INTAKE_POS));
+		oi.winchLiftButt.whenPressed(new SwarmyMoveToPos(Constants.WINCH_SHOOT_OUTERWORKS));
 	}
 
 	/**

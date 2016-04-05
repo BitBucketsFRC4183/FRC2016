@@ -25,9 +25,12 @@ public class OI {
 	public Button unShootButt = new JoystickButton(operator,6);
 	public Button shootButt = new JoystickButton(operator,2);
 	
+	public POVHat togglePhoto = new POVHat(operator, POVHat.HatDir.LEFT);
+	
 	public Button winchLiftButt = new JoystickButton(operator, 3);
 	public Button winchShootButt = new JoystickButton(operator, 4);
-	public Button winchIntakeButt = new JoystickButton(operator, 1);
+	public Button winchZeroButt = new JoystickButton(operator, 1);
+	//public Button winchIntakeButt = new JoystickButton(operator, 2);
 	
 	//public Button prepButt = new JoystickButton(operator, 1);
 	//public Button zeroButt = new JoystickButton(operator, 14);

@@ -87,6 +87,17 @@ public class Drivey extends Subsystem {
 		right1.set(right);
 		right2.set(right);
 	}
+	
+	public void driveStraight(double yaw){
+		
+		if(yaw<Constants.DESIRED_ANGLE){
+			arcadeDrive(Constants.DRIVE_KANGLE*left1.getEncVelocity()+Constants.DESIRED_ANGLE,0);
+		}
+		
+		if(yaw>Constants.DESIRED_ANGLE){
+			arcadeDrive(0,Constants.DRIVE_KANGLE*right1.getEncVelocity()-Constants.DESIRED_ANGLE);
+		}
+	}
 
 	/**
 	 * Drives the robot at a speed in MMS with a specified turn radius in MM.

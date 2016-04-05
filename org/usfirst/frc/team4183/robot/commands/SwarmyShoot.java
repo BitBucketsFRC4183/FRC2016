@@ -19,7 +19,7 @@ public class SwarmyShoot extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	initTime = System.currentTimeMillis();
-    	Robot.sucky.setIntake(-1.0);
+    	Robot.sucky.setIntake(-1.0);;
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -28,7 +28,7 @@ public class SwarmyShoot extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return System.currentTimeMillis()-initTime>=1000;
+        return System.currentTimeMillis()-initTime>=500;
     }
 
     // Called once after isFinished returns true

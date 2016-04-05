@@ -23,5 +23,10 @@ public class Shooty extends Subsystem {
     	motor1.set(-speed);
     	motor2.set(speed);
     }
+    
+    public void setBreak(boolean enable){
+    	motor1.enableBrakeMode(enable);
+    	motor2.enableBrakeMode(enable);
+    }
 }
 

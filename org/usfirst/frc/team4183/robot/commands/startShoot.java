@@ -15,12 +15,14 @@ public class startShoot extends Command {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.shooty);
         requires(Robot.sucky);
+        requires(Robot.shooty);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	timeInit = System.currentTimeMillis();
-    	Robot.sucky.intakeOut();	
+    	Robot.sucky.intakeOut();
+    	Robot.shooty.setBreak(false);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -35,6 +37,7 @@ public class startShoot extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.shooty.setBreak(false);
     	Robot.shooty.setMotor(Constants.SHOOTER_SPEED);
     	Robot.sucky.intakeOff();
     }
