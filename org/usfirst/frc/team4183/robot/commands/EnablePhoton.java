@@ -7,21 +7,23 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class OpenPort extends Command {
-
-    public OpenPort() {
+public class EnablePhoton extends Command {
+	
+	private boolean enable;
+	
+    public EnablePhoton(boolean enable) {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.sucky);
+		this.enable = enable;
+        requires(Robot.shooty);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.sucky.enablePort(-1.0);
+    	Robot.shooty.shootPhotons(enable);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.sucky.enablePort(-1.0);
     }
 
     // Make this return true when this Command no longer needs to run execute()

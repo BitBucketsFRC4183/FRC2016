@@ -71,7 +71,7 @@ public class Constants {
 
 	public static final double DRIVE_KANGLE = 0.005;
 	
-	public static final double DESIRED_ANGLE = 1.57;
+	public static final double DESIRED_ANGLE = 0;
            
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/** The angle to set the servo to to unlock the ratchet **/
@@ -80,9 +80,10 @@ public class Constants {
 	public static final int WINCH_SERVO_LOCK_ANGLE = 140;
 	
 	/** Shooting from batter setpoint **/
-	public static final int WINCH_SHOOT_BATTER = -18378;
+	//public static final int WINCH_SHOOT_BATTER = -18378;
+	public static final int WINCH_SHOOT_BATTER = -20200;
 	/** Shooting from outerworks setpoint**/
-	public static final int WINCH_SHOOT_OUTERWORKS = -38740;
+	public static final int WINCH_SHOOT_OUTERWORKS = -46060;
 	/** Lift setpoint **/
 	public static final int WINCH_LIFT_POS = -35000;
 	/** Ball sepoint **/
@@ -96,13 +97,13 @@ public class Constants {
 	/** Time in ms to unlatch the winch ratchet **/
 	public static final int WINCH_UNLAT_TIME = 50;
 	/**Time in ms to get to the ball grabbing position**/
-	public static final int SWARMY_DOWN_TIME = 3000;
+	public static final int SWARMY_DOWN_TIME = 2000;
 	/**Time in ms to get to the up position**/
 	public static final int SWARMY_UP_TIME = 300;
 	/**Time in ms to wait after ball is detected on intake**/
 	public static final int INTAKE_TIMEOUT_TIME = 1000;
 	/**Time in ms for the ball to cease contact with the shooter**/
-	public static final int SHOOT_DELAY_TIME = 200;
+	public static final int SHOOT_DELAY_TIME = 75;
 	
 	/** Max current for winch motor **/
 	public static final int WINCH_MAX_CURRENT = 50;
@@ -121,9 +122,10 @@ public class Constants {
 	public static final double WINCH_D = 0.0/50000.0;
 	public static final double WINCH_ACCEPTANCE_RANGE = 400;
 	public static final double WINCH_PID_PERIOD = 0.01;
-///////////////////////////////////////////////////////////////////////////////////////////////////////////
-	public static final double CHEZ_GAIN = 1.0;
-	
+/////////////////////////////////////////////Drive PID Values//////////////////////////////////////////////
+	public static final double DRIVE_P = 0.01;
+	public static final double DRIVE_I = 0.0015;
+	public static final double DRIVE_D = 0;
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////// POWER DISTRIBUTION BOARD CHANNELS/////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////

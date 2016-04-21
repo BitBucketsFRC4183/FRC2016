@@ -2,11 +2,16 @@
 package org.usfirst.frc.team4183.robot.subsystems;
 
 import org.usfirst.frc.team4183.robot.Constants;
+import org.usfirst.frc.team4183.robot.PIDCamera;
+import org.usfirst.frc.team4183.robot.PIDGyro;
+import org.usfirst.frc.team4183.robot.PIDTrackingOut;
+import org.usfirst.frc.team4183.robot.PIDYaw;
 import org.usfirst.frc.team4183.robot.PracticeRobotMap;
 import org.usfirst.frc.team4183.robot.PracticeRobotMap;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
+import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -21,6 +26,13 @@ public class Drivey extends Subsystem {
 	
 	RobotDrive robotDrive;
 	
+	PIDYaw pidYaw;
+	PIDTrackingOut pidTrackingOut;
+	PIDGyro pidGyro;
+	PIDCamera pidCamera;
+	public PIDController yawController;
+	public PIDController camController;
+	
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 
@@ -31,17 +43,12 @@ public class Drivey extends Subsystem {
 		left2 = new CANTalon(PracticeRobotMap.leftMotor2);
 		
 		robotDrive = new RobotDrive(left1,left2,right1,right2);
-		//position = NetworkTable.getTable("Enc Values");
+		pidGyro = new PIDGyro();
+		pidCamera = new PIDCamera();
+		pidYaw = new PIDYaw();
+		pidTrackingOut = new PIDTrackingOut();
 		
-//		right1.changeControlMode(TalonControlMode.Speed);
-//		left1.changeControlMode(TalonControlMode.Speed);
-//		right1.configEncoderCodesPerRev(4 * Constants.DRIVE_ENC_CPR);
-//		left1.configEncoderCodesPerRev(4 * Constants.DRIVE_ENC_CPR);
-
-//		right2.changeControlMode(TalonControlMode.Follower);
-//		left2.changeControlMode(TalonControlMode.Follower);
-//		right2.set(RobotMap.rightMotor1);
-//		left2.set(RobotMap.leftMotor1);
+		yawController = new PIDController(0,0,0,pidGyro, pidYaw);
 	}
 
 	public void initDefaultCommand() {
@@ -49,56 +56,37 @@ public class Drivey extends Subsystem {
 		// setDefaultCommand(new MySpecialCommand());
 	}
 	
-	/**
-	 * 
-	 * @param speed
-	 * @param radius
-	 */
-//	public void driveCheez(double speed, double radius) {
-//		if(radius==0){
-//			driveWRPM((int) (speed * Constants.MAX_WRPM), (speed) * 60);
-//		}
-//		driveWRPM((int) (speed * Constants.MAX_WRPM), (speed / radius) * 60);
-//	}
-	
-	public double skim(double v) {
-		  // gain determines how much to skim off the top
-		if (v > 1.0)
-			return -((v - 1.0) * Constants.CHEZ_GAIN);
-		else if (v < -1.0)
-		    return -((v + 1.0) * Constants.CHEZ_GAIN);
-		return 0;
-		}
-	
-	public void driveCheez(double speed, double radius){
-		double t_left = speed + radius;
-		double t_right = speed - radius;
-
-		double left = t_left + skim(t_right);
-		double right = t_right + skim(t_left);
-		
-		if(speed==0){
-			left=1;
-			right=1;
-		}
-		
-		left1.set(left);
-		left2.set(left);
-		right1.set(right);
-		right2.set(right);
+	public void setGyroPID(double P, double I, double D, double setpoint){
+		yawController.setPID(P, I, D);
+		yawController.setSetpoint(setpoint);
 	}
 	
-	public void driveStraight(double yaw){
-		
-		if(yaw<Constants.DESIRED_ANGLE){
-			arcadeDrive(Constants.DRIVE_KANGLE*left1.getEncVelocity()+Constants.DESIRED_ANGLE,0);
-		}
-		
-		if(yaw>Constants.DESIRED_ANGLE){
-			arcadeDrive(0,Constants.DRIVE_KANGLE*right1.getEncVelocity()-Constants.DESIRED_ANGLE);
-		}
+	public void setVisionPID(double P, double I, double D, double setpoint){
+		camController = new PIDController(P, I, D, pidCamera, pidTrackingOut);
+		camController.setOutputRange(-0.67, 0.67);
+		camController.setSetpoint(setpoint);
 	}
-
+	
+	public void enableGyroPID(){
+		yawController.enable();
+	}
+	
+	public void disableGyroPID(){
+		yawController.disable();
+	}
+	
+	public void resetGyro(){
+		pidGyro.resetGyro();
+	}
+	
+	public void enableTrackingPID(){
+		camController.enable();
+	}
+	
+	public void disableTrackingPID(){
+		camController.disable();
+	}
+	
 	/**
 	 * Drives the robot at a speed in MMS with a specified turn radius in MM.
 	 * 

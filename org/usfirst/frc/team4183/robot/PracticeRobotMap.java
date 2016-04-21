@@ -27,6 +27,7 @@ public class PracticeRobotMap {
 	
 	public static int lowLimit = 0;
 	public static int servoSwitch = 1;
+	public static int laserCannon = 4;
 	// If you are using multiple modules, make sure to define both the port
 	// number and the module. For example you with a rangefinder:
 	// public static int rangefinderPort = 1;

@@ -10,9 +10,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class zeroArm extends CommandGroup {
+public class ZeroArm extends CommandGroup {
     
-    public  zeroArm(long delay) {
+    public  ZeroArm(long delay) {
         // Add Commands here:
         addSequential(new PrepUnlatch());
         addSequential(new SwarmyDown());

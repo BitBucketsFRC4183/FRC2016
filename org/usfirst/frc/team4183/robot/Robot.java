@@ -1,22 +1,29 @@
 
 package org.usfirst.frc.team4183.robot;
 
+import org.usfirst.frc.team4183.robot.commands.CameraRotate;
 import org.usfirst.frc.team4183.robot.commands.ClosePort;
+import org.usfirst.frc.team4183.robot.commands.EnablePhoton;
 import org.usfirst.frc.team4183.robot.commands.OpenPort;
 import org.usfirst.frc.team4183.robot.commands.PrepUnlatch;
+import org.usfirst.frc.team4183.robot.commands.ReverseShoot;
 import org.usfirst.frc.team4183.robot.commands.SwarmyIntakeIn;
 import org.usfirst.frc.team4183.robot.commands.SwarmyIntakeOff;
 import org.usfirst.frc.team4183.robot.commands.SwarmyIntakeOut;
 import org.usfirst.frc.team4183.robot.commands.SwarmyLatch;
 import org.usfirst.frc.team4183.robot.commands.SwarmyMoveToPos;
 import org.usfirst.frc.team4183.robot.commands.SwarmyShoot;
+import org.usfirst.frc.team4183.robot.commands.SwarmyShootyLol;
 import org.usfirst.frc.team4183.robot.commands.SwarmyTeleop;
 import org.usfirst.frc.team4183.robot.commands.ToggleBrakeMode;
-import org.usfirst.frc.team4183.robot.commands.startShoot;
-import org.usfirst.frc.team4183.robot.commands.stopShoot;
+import org.usfirst.frc.team4183.robot.commands.StartShoot;
+import org.usfirst.frc.team4183.robot.commands.StopShoot;
+import org.usfirst.frc.team4183.robot.commands.autonomous.CameraAlign;
 import org.usfirst.frc.team4183.robot.commands.autonomous.LowBarAuto;
 import org.usfirst.frc.team4183.robot.commands.autonomous.OtherDefensesAuto;
-import org.usfirst.frc.team4183.robot.commands.autonomous.zeroArm;
+import org.usfirst.frc.team4183.robot.commands.autonomous.OuterDefenseAutoAlign;
+import org.usfirst.frc.team4183.robot.commands.autonomous.RelativeRotate;
+import org.usfirst.frc.team4183.robot.commands.autonomous.ZeroArm;
 import org.usfirst.frc.team4183.robot.subsystems.Drivey;
 import org.usfirst.frc.team4183.robot.subsystems.Shooty;
 import org.usfirst.frc.team4183.robot.subsystems.Sucky;
@@ -29,6 +36,7 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -46,11 +54,14 @@ public class Robot extends IterativeRobot {
 	public static final Winchy winchy = new Winchy();
 	public static final Shooty shooty = new Shooty();
 	
-	//public static TeensyIMU teensyIMU;
+	public static TeensyIMU teensyIMU;
 	
 	public static PowerDistributionPanel pdp;
 	
 	public static OI oi;
+	
+	public static NetworkTable IMUTable; 
+	public static NetworkTable cameraTable;
 	
 //	//Talons for arcade drive
 //	public CANTalon right1;
@@ -69,29 +80,20 @@ public class Robot extends IterativeRobot {
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
+		teensyIMU = new TeensyIMU();
 		System.out.println("initializing robot");
-//		teensyIMU = new TeensyIMU();
+		IMUTable = NetworkTable.getTable("IMU Data");
+		cameraTable = NetworkTable.getTable("BucketVision");
+		pdp = new PowerDistributionPanel();
 		oi = new OI();
 		chooser = new SendableChooser();
 		chooser.addDefault("Low bar auto", new LowBarAuto());
 		chooser.addObject("OtherDefensesAuto", new OtherDefensesAuto());
+		chooser.addObject("Right Defense Auto", new OuterDefenseAutoAlign(false));
+		chooser.addObject("Left Defense Auto", new OuterDefenseAutoAlign(true));
+		chooser.addObject("PID camera align", new CameraAlign());
+		chooser.addObject("Keep heading", new RelativeRotate(45));
 		SmartDashboard.putData("Auto mode", chooser);
-		
-//		right1 = new CANTalon(RobotMap.rightMotor1);
-//		right2 = new CANTalon(RobotMap.rightMotor1);
-//		left1 = new CANTalon(RobotMap.leftMotor1);
-//		left2 = new CANTalon(RobotMap.leftMotor1);
-//		
-//		rDrive = new RobotDrive(left1, left2, right1, right2);
-		pdp = new PowerDistributionPanel();
-//		teensyIMU.init();
-//		teensyIMU.startData();
-		
-		server = CameraServer.getInstance();
-        server.setQuality(50);
-        //the camera name (ex "cam0") can be found through the roborio web interface
-        server.startAutomaticCapture("cam0");
-		
 	}
 
 	/**
@@ -131,8 +133,6 @@ public class Robot extends IterativeRobot {
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null)
 			autonomousCommand.start();
-		
-		//teensyIMU.magnoOff();
 	}
 
 	/**
@@ -152,24 +152,20 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
-
-		//teensyIMU.magnoOff();
-		
-		//oi.prepButt.whenPressed(new SwarmyPrep());
-		
-//		oi.engageButt.whenPressed(new SwarmyLatch());
 		oi.disengageButt.whenPressed(new PrepUnlatch());
 		oi.engageButt.whenPressed(new SwarmyTeleop());
 		oi.engageButt.whenReleased(new SwarmyLatch());
 		
-		//oi.prepButt.whenPressed(new PrepUnlatch());
 		oi.portButton.whenPressed(new OpenPort());
 		oi.portButton.whenReleased(new ClosePort());
 		
-		oi.spoolButt.whenPressed(new startShoot());
-		oi.unShootButt.whenPressed(new stopShoot());
-		
+		oi.spoolButt.whenPressed(new StartShoot());
+		oi.unShootButt.whenPressed(new StopShoot());
 		oi.shootButt.whenPressed(new SwarmyShoot());
+		oi.autoShootButt.whenPressed(new SwarmyShootyLol());
+		
+		oi.spinShoot.whenPressed(new ReverseShoot());
+		oi.spinShoot.whenReleased(new StopShoot());
 		
 		oi.breakButt.whenPressed(new ToggleBrakeMode(true));
 		oi.coastButt.whenPressed(new ToggleBrakeMode(false));
@@ -180,9 +176,13 @@ public class Robot extends IterativeRobot {
 		oi.intakeOutButt.whenReleased(new SwarmyIntakeOff());
 		
 		oi.winchShootButt.whenPressed(new SwarmyMoveToPos(Constants.WINCH_SHOOT_BATTER));
-		oi.winchZeroButt.whenPressed(new zeroArm(0));
-		//oi.winchIntakeButt.whenPressed(new SwarmyMoveToPos(Constants.WINCH_INTAKE_POS));
+		oi.winchZeroButt.whenPressed(new ZeroArm(0));
 		oi.winchLiftButt.whenPressed(new SwarmyMoveToPos(Constants.WINCH_SHOOT_OUTERWORKS));
+		oi.winchIntakeButt.whenPressed(new SwarmyMoveToPos(Constants.WINCH_INTAKE_POS));
+		
+		oi.togglePhoto.whenPressed(new EnablePhoton(true));
+		oi.togglePhoto.whenReleased(new EnablePhoton(false));
+		
 	}
 
 	/**
@@ -194,21 +194,7 @@ public class Robot extends IterativeRobot {
 		//Driving stuff
 		drivey.arcadeDrive(oi.driver.getAxis(AxisType.kY) * (oi.slowMoButt.get() ? 0.5 : 1.0),
 				Math.pow(oi.driver.getAxis(AxisType.kZ), 2)*Math.signum(oi.driver.getAxis(AxisType.kZ))*(oi.slowMoButt.get() ? 0.5 : 1.0));
-		
-		//Operator stuff
-//		if(sucky.getCurrentCommand()==null){
-//			if(oi.operator.getAxis(AxisType.kY)>0.5){
-//				sucky.intakeIn();
-//			}else if(oi.operator.getAxis(AxisType.kY)<-0.5){
-//				sucky.intakeOut();
-//			}else{
-//				sucky.intakeOff();
-//			}
-//		}
-		//Manual winch motor control
-			//winchy.setSetpoint(winchy.getSetpoint()+300.0*oi.operator.getAxis(AxisType.kZ));
-			//winchy.setSpeed(-oi.operator.getAxis(AxisType.kZ));	
-		
+			
 		if(winchy.getLowSwitch()){
 			winchy.zeroEnc();
 		}

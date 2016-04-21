@@ -8,20 +8,20 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class startShoot extends Command {
+public class StartShoot extends Command {
 	private long timeInit;
 	
-    public startShoot() {
+    public StartShoot() {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.shooty);
         requires(Robot.sucky);
         requires(Robot.shooty);
     }
-
+                                                                                  
     // Called just before this Command runs the first time
     protected void initialize() {
     	timeInit = System.currentTimeMillis();
-    	Robot.sucky.intakeOut();
+    	Robot.sucky.setIntake(1.0);
     	Robot.shooty.setBreak(false);
     }
 

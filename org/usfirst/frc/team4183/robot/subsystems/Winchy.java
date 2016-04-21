@@ -31,9 +31,6 @@ public class Winchy extends Subsystem {
 		motor1.configMaxOutputVoltage(Constants.MAX_WINCH_VOLTAGE);
 		motor2.configMaxOutputVoltage(Constants.MAX_WINCH_VOLTAGE);
 		
-		motor2.changeControlMode(TalonControlMode.Follower);
-		motor2.set(PracticeRobotMap.winchMotor1);
-		
 		pidControl = new PIDController(Constants.WINCH_P, 
 				Constants.WINCH_I, Constants.WINCH_D, motor1, motor1, Constants.WINCH_PID_PERIOD);
 		
@@ -44,7 +41,11 @@ public class Winchy extends Subsystem {
 	protected void initDefaultCommand() {
 		//setvBusMode();
 	}
-
+	
+	/**
+	 * 
+	 * @param speed
+	 */
 	public void setSpeed(double speed) {
 		setvBusMode();
 		enableMotors();
@@ -66,12 +67,19 @@ public class Winchy extends Subsystem {
 		}
 	}
 	
+	/**
+	 * Sets motors to v Bus mode
+	 */
 	public void setvBusMode(){
 		motor1.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
 		motor2.changeControlMode(CANTalon.TalonControlMode.Follower);
 		motor2.set(motor1.getDeviceID());
 	}
 	
+	/**
+	 * 
+	 * @param pos The angle to set the servo to
+	 */
 	public void setLock(double pos){
 		lock.setAngle(pos);
 	}
@@ -84,15 +92,26 @@ public class Winchy extends Subsystem {
 		return motor1.getEncPosition();
 	}
 	
+	/**
+	 * 
+	 * @return The current angle of the servo
+	 */
 	public double getServoAngle(){
 		return lock.getAngle();
 	}
 	
+	/**
+	 * 
+	 * @return Returns true if arm is zeroed
+	 */
 	public boolean getLowSwitch(){
 		return !lowLimit.get();
 	}
 	
-	//True if winch is engaged
+	/**
+	 * 
+	 * @return Returns true if latched
+	 */
 	public boolean getLatchSwitch(){
 		return servoSwitch.get();
 	}
@@ -148,10 +167,10 @@ public class Winchy extends Subsystem {
 	}
 	
 	public void enablePID(){
-//		motor1.changeControlMode(CANTalon.TalonControlMode.Position);
-//		motor2.changeControlMode(CANTalon.TalonControlMode.Follower);
-//		motor2.set(motor1.getDeviceID());
 		pidControl.enable();
+		motor1.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+		motor2.changeControlMode(CANTalon.TalonControlMode.Follower);
+		motor2.set(motor1.getDeviceID());
 	}
 	
 	public void enableMotors(){
@@ -167,33 +186,6 @@ public class Winchy extends Subsystem {
 	public void disableMotors(){
 		motor1.disable();
 		motor2.disable();
-	}
-	
-	public class TalonEncoder implements PIDSource{
-		private CANTalon talon;
-		
-		public TalonEncoder(CANTalon talon){
-			this.talon = talon;
-		}
-		
-		@Override
-		public void setPIDSourceType(PIDSourceType pidSource) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public PIDSourceType getPIDSourceType() {
-			// TODO Auto-generated method stub
-			return PIDSourceType.kDisplacement;
-		}
-
-		@Override
-		public double pidGet() {
-			// TODO Auto-generated method stub
-			return talon.getEncPosition();
-		}
-		
 	}
 	
 }

@@ -1,6 +1,8 @@
 package org.usfirst.frc.team4183.robot.commands.autonomous;
 
 import org.usfirst.frc.team4183.robot.Constants;
+import org.usfirst.frc.team4183.robot.commands.CameraRotate;
+import org.usfirst.frc.team4183.robot.commands.SimpleAlign;
 import org.usfirst.frc.team4183.robot.commands.SwarmyMoveToPos;
 import org.usfirst.frc.team4183.robot.commands.ToggleBrakeMode;
 
@@ -9,18 +11,18 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class LowBarAuto extends CommandGroup {
+public class OuterDefenseAutoAlign extends CommandGroup {
     
-    public  LowBarAuto() {
-    	addSequential(new ToggleBrakeMode(false));
-    	addSequential(new ZeroArm(0));
-    	//addSequential(new DriveStraight(0.6, 4000));
-    	addSequential(new DriveAuto(0.75,0,3500));
-    	addSequential(new SwarmyMoveToPos(Constants.WINCH_SHOOT_BATTER));
-    	//addSequential(new RelativeRotate(60));
+    public  OuterDefenseAutoAlign(boolean dir) {
         // Add Commands here:
-        // e.g. addSequential(new Command1());
-        //      addSequential(new Command2());
+    	addSequential(new ToggleBrakeMode(false));
+    	addSequential(new ZeroArm(400));
+    	addSequential(new SwarmyMoveToPos(Constants.WINCH_SHOOT_BATTER));
+    	addSequential(new DriveAuto(0.75, 0, 3000));
+    	addSequential(new ToggleBrakeMode(true));
+    	addSequential(new SwarmyMoveToPos(Constants.WINCH_SHOOT_OUTERWORKS));
+    	addSequential(new CameraRotate(dir, 5000));
+    	addSequential(new SimpleAlign());
         // these will run in order.
 
         // To run multiple commands at the same time,

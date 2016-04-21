@@ -21,12 +21,13 @@ public class CompRobotMap {
 	public static int shootMotor1 = 5;
 	public static int shootMotor2 = 6;
 	
-	public static int winchMotor1 = 3;
-	public static int winchMotor2 = 4;
+	public static int winchMotor1 = 4;
+	public static int winchMotor2 = 3;
 	public static int winchServo = 3;
 	
 	public static int lowLimit = 0;
 	public static int servoSwitch = 2;
+	public static int laserCannon = 4;
 	// If you are using multiple modules, make sure to define both the port
 	// number and the module. For example you with a rangefinder:
 	// public static int rangefinderPort = 1;

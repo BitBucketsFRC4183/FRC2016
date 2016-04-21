@@ -24,9 +24,6 @@ public class SwarmySetPos extends Command {
 
 	@Override
 	protected void execute() {
-		//Robot.winchy.setSpeed(-1 * Constants.WINCH_SPEED);
-		
-		
 	}
 
 	@Override

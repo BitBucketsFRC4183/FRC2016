@@ -8,34 +8,40 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DriveStraight extends Command {
 	private int distance;
 	private long timeInit;
+	private double time;
+	private double speed;
 
-	public DriveStraight(int dist) {
-		distance = dist;
+	public DriveStraight(double speed, double time) {
+		requires(Robot.drivey);
+		this.speed = speed;
+		this.time = time;
 	}
 
 	@Override
 	protected void initialize() {
 		timeInit = System.currentTimeMillis();
-//		Robot.drivey.driveMMS(Constants.Autonomous.DRIVE_VEL, 0);
+		Robot.drivey.resetGyro();
+		Robot.drivey.enableGyroPID();
 	}
 
 	@Override
 	protected void execute() {
-//		Robot.drivey.driveMMS(Constants.Autonomous.DRIVE_VEL, 0);
+		Robot.drivey.arcadeDrive(speed, Robot.drivey.yawController.get());
 	}
 
 	@Override
 	protected boolean isFinished() {
-		return System.currentTimeMillis() - timeInit >= distance / Constants.Autonomous.DRIVE_VEL;
+		return System.currentTimeMillis() - timeInit >= time;
 	}
 
 	@Override
 	protected void end() {
-//		Robot.drivey.driveMMS(0, 0);
+		Robot.drivey.disableGyroPID();
+		Robot.drivey.arcadeDrive(0, 0);
 	}
 
 	@Override
 	protected void interrupted() {
-//		Robot.drivey.driveMMS(0, 0);
+		Robot.drivey.disableGyroPID();
 	}
 }

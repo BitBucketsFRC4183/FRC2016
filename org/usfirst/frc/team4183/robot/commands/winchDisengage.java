@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class winchDisengage extends CommandGroup {
+public class WinchDisengage extends CommandGroup {
     
-    public  winchDisengage() {
+    public  WinchDisengage() {
         // Add Commands here:
     	addSequential(new SwarmyPrep());
     	addSequential(new SwarmyUnlatch());

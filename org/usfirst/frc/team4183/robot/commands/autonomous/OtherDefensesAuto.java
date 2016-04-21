@@ -14,8 +14,10 @@ public class OtherDefensesAuto extends CommandGroup {
     
     public  OtherDefensesAuto() {
     	addSequential(new ToggleBrakeMode(false));
-    	addSequential(new zeroArm(400));
-    	addSequential(new DriveAuto(0.75,0,4000));
+    	addSequential(new ZeroArm(400));
+    	//addSequential(new DriveStraight(0.6, 4000));
+    	addSequential(new SwarmyMoveToPos(Constants.WINCH_SHOOT_BATTER));
+    	addSequential(new DriveAuto(0.75, 0, 3500));
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

@@ -1,9 +1,9 @@
 package org.usfirst.frc.team4183.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.Trigger;
+import edu.wpi.first.wpilibj.buttons.Button;
 
-public class POVHat extends Trigger {
+public class POVHat extends Button {
     private HatDir hatDir;
     private Joystick stick;
 
@@ -16,7 +16,6 @@ public class POVHat extends Trigger {
         stick = joystick;
     }
 
-    @Override
     public boolean get() {
         switch(hatDir){
             case UP:

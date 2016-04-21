@@ -1,21 +1,16 @@
 package org.usfirst.frc.team4183.robot.commands;
 
-import org.usfirst.frc.team4183.robot.Constants;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class WinchEngage extends CommandGroup {
+public class SwarmyShootyLol extends CommandGroup {
     
-    public  WinchEngage() {
-        // Add Commands here:
-    	addSequential(new SwarmyOff());
-        addSequential(new SwarmyLatch());
-
-        // these will run in order.
-
+    public  SwarmyShootyLol() {
+    	addSequential(new StartShoot());
+    	addSequential(new SwarmyDelay(500));
+    	addSequential(new SwarmyShoot());
         // To run multiple commands at the same time,
         // use addParallel()
         // e.g. addParallel(new Command1());

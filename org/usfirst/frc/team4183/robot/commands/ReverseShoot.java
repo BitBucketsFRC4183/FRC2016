@@ -7,21 +7,21 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class OpenPort extends Command {
+public class ReverseShoot extends Command {
 
-    public OpenPort() {
+    public ReverseShoot() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.sucky);
+    	requires(Robot.shooty);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.sucky.enablePort(-1.0);
+    	Robot.shooty.setMotor(1.0);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.sucky.enablePort(-1.0);
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
