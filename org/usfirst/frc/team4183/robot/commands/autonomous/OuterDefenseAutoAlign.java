@@ -1,8 +1,6 @@
 package org.usfirst.frc.team4183.robot.commands.autonomous;
 
 import org.usfirst.frc.team4183.robot.Constants;
-import org.usfirst.frc.team4183.robot.commands.CameraRotate;
-import org.usfirst.frc.team4183.robot.commands.SimpleAlign;
 import org.usfirst.frc.team4183.robot.commands.SwarmyMoveToPos;
 import org.usfirst.frc.team4183.robot.commands.ToggleBrakeMode;
 
@@ -21,8 +19,10 @@ public class OuterDefenseAutoAlign extends CommandGroup {
     	addSequential(new DriveAuto(0.75, 0, 3000));
     	addSequential(new ToggleBrakeMode(true));
     	addSequential(new SwarmyMoveToPos(Constants.WINCH_SHOOT_OUTERWORKS));
-    	addSequential(new CameraRotate(dir, 5000));
-    	addSequential(new SimpleAlign());
+    	addSequential(new CameraRotate(4000,false));
+    	addSequential(new CameraRotate(4000, false));
+    	addSequential(new CameraRotate(4000, true));
+    	//addSequential(new SimpleAlign());
         // these will run in order.
 
         // To run multiple commands at the same time,

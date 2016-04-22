@@ -1,7 +1,6 @@
 package org.usfirst.frc.team4183.robot.commands.autonomous;
 
 import org.usfirst.frc.team4183.robot.Constants;
-import org.usfirst.frc.team4183.robot.PIDYaw;
 import org.usfirst.frc.team4183.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;

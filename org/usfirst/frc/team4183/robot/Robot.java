@@ -1,7 +1,6 @@
 
 package org.usfirst.frc.team4183.robot;
 
-import org.usfirst.frc.team4183.robot.commands.CameraRotate;
 import org.usfirst.frc.team4183.robot.commands.ClosePort;
 import org.usfirst.frc.team4183.robot.commands.EnablePhoton;
 import org.usfirst.frc.team4183.robot.commands.OpenPort;
@@ -19,6 +18,7 @@ import org.usfirst.frc.team4183.robot.commands.ToggleBrakeMode;
 import org.usfirst.frc.team4183.robot.commands.StartShoot;
 import org.usfirst.frc.team4183.robot.commands.StopShoot;
 import org.usfirst.frc.team4183.robot.commands.autonomous.CameraAlign;
+import org.usfirst.frc.team4183.robot.commands.autonomous.CameraRotate;
 import org.usfirst.frc.team4183.robot.commands.autonomous.LowBarAuto;
 import org.usfirst.frc.team4183.robot.commands.autonomous.OtherDefensesAuto;
 import org.usfirst.frc.team4183.robot.commands.autonomous.OuterDefenseAutoAlign;

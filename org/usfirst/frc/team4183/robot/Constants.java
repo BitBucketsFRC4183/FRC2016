@@ -137,7 +137,11 @@ public class Constants {
 	public class Autonomous {
 		/** The driving velocity in MMS **/
 		public static final int DRIVE_VEL = 25;
-
+		
+		public static final int DRIVE_AUTO_TIME = 4000;
+		
+		public static final double HFOV = 145.0;
+		
 		public static final double DRIVE_ANGLE_COEFFICIENT = 0.005;
 	}
 

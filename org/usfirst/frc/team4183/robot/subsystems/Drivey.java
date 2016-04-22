@@ -10,7 +10,6 @@ import org.usfirst.frc.team4183.robot.PracticeRobotMap;
 import org.usfirst.frc.team4183.robot.PracticeRobotMap;
 
 import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -82,6 +81,8 @@ public class Drivey extends Subsystem {
 	public void enableTrackingPID(){
 		camController.enable();
 	}
+	
+	
 	
 	public void disableTrackingPID(){
 		camController.disable();
