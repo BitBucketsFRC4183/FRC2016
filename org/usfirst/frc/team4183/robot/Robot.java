@@ -6,6 +6,7 @@ import org.usfirst.frc.team4183.robot.commands.EnablePhoton;
 import org.usfirst.frc.team4183.robot.commands.OpenPort;
 import org.usfirst.frc.team4183.robot.commands.PrepUnlatch;
 import org.usfirst.frc.team4183.robot.commands.ReverseShoot;
+import org.usfirst.frc.team4183.robot.commands.SimpleVision;
 import org.usfirst.frc.team4183.robot.commands.SwarmyIntakeIn;
 import org.usfirst.frc.team4183.robot.commands.SwarmyIntakeOff;
 import org.usfirst.frc.team4183.robot.commands.SwarmyIntakeOut;
@@ -17,13 +18,13 @@ import org.usfirst.frc.team4183.robot.commands.SwarmyTeleop;
 import org.usfirst.frc.team4183.robot.commands.ToggleBrakeMode;
 import org.usfirst.frc.team4183.robot.commands.StartShoot;
 import org.usfirst.frc.team4183.robot.commands.StopShoot;
-import org.usfirst.frc.team4183.robot.commands.autonomous.CameraAlign;
 import org.usfirst.frc.team4183.robot.commands.autonomous.CameraRotate;
 import org.usfirst.frc.team4183.robot.commands.autonomous.LowBarAuto;
 import org.usfirst.frc.team4183.robot.commands.autonomous.OtherDefensesAuto;
 import org.usfirst.frc.team4183.robot.commands.autonomous.OuterDefenseAutoAlign;
 import org.usfirst.frc.team4183.robot.commands.autonomous.RelativeRotate;
 import org.usfirst.frc.team4183.robot.commands.autonomous.ZeroArm;
+import org.usfirst.frc.team4183.robot.subsystems.Climby;
 import org.usfirst.frc.team4183.robot.subsystems.Drivey;
 import org.usfirst.frc.team4183.robot.subsystems.Shooty;
 import org.usfirst.frc.team4183.robot.subsystems.Sucky;
@@ -53,6 +54,7 @@ public class Robot extends IterativeRobot {
 	public static final Sucky sucky = new Sucky();
 	public static final Winchy winchy = new Winchy();
 	public static final Shooty shooty = new Shooty();
+	public static final Climby climby = new Climby();
 	
 	public static TeensyIMU teensyIMU;
 	
@@ -91,8 +93,8 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("OtherDefensesAuto", new OtherDefensesAuto());
 		chooser.addObject("Right Defense Auto", new OuterDefenseAutoAlign(false));
 		chooser.addObject("Left Defense Auto", new OuterDefenseAutoAlign(true));
-		chooser.addObject("PID camera align", new CameraAlign());
-		chooser.addObject("Keep heading", new RelativeRotate(45));
+		chooser.addObject("PID camera align", new CameraRotate(4000, false));
+		chooser.addObject("Keep heading", new SimpleVision());
 		SmartDashboard.putData("Auto mode", chooser);
 	}
 

@@ -2,7 +2,6 @@ package org.usfirst.frc.team4183.robot;
 
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 public class PIDGyro implements PIDSource {
 

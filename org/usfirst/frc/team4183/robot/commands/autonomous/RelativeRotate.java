@@ -28,7 +28,8 @@ public class RelativeRotate extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	System.out.println(Robot.drivey.yawController.get());
-    	Robot.drivey.arcadeDrive(0, Robot.drivey.yawController.get());
+    	Robot.drivey.arcadeDrive(0, Robot.drivey.yawController.get()+
+    			Math.signum(Robot.drivey.yawController.get())*0.3);
     }
 
     // Make this return true when this Command no longer needs to run execute()

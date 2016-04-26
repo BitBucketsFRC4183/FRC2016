@@ -14,7 +14,7 @@ public class TeensyIMU {
 	public TeensyIMU(){
 		System.out.println("Starting teeeeeeeeeeensy");
 		serialPort = new SerialPort(SerialPortList.getPortNames()[0]);
-		System.out.println(serialPort.getPortName());
+		//System.out.println(serialPort.getPortName());
 		
 		    
 		try {
@@ -40,7 +40,7 @@ public class TeensyIMU {
 					
 					try {
 						if((rawIn=serialPort.readString())!=null){
-							System.out.println(rawIn);
+							//System.out.println(rawIn);
 							inBuffer+=rawIn;
 							for(String line : inBuffer.split("\n")){
 								//New line counted as character
@@ -53,7 +53,7 @@ public class TeensyIMU {
 										Robot.IMUTable.putNumber("Pitch", hexToDouble(poseData[3])*(180.0/Math.PI));
 										Robot.IMUTable.putNumber("Roll", hexToDouble(poseData[2])*(180.0/Math.PI));
 										Robot.IMUTable.putNumber("Update rate", (double)(timeCurrent-timePrev));
-										System.out.println((double)(timeCurrent-timePrev));
+										//System.out.println((double)(timeCurrent-timePrev));
 							
 										timePrev = timeCurrent;
 									}

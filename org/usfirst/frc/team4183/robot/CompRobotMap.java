@@ -25,6 +25,9 @@ public class CompRobotMap {
 	public static int winchMotor2 = 3;
 	public static int winchServo = 3;
 	
+	public static int climbMotor1 = 22;
+	public static int climbServo = 4;
+	
 	public static int lowLimit = 0;
 	public static int servoSwitch = 2;
 	public static int laserCannon = 4;

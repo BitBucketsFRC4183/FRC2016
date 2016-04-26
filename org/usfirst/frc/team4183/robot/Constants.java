@@ -123,7 +123,7 @@ public class Constants {
 	public static final double WINCH_ACCEPTANCE_RANGE = 400;
 	public static final double WINCH_PID_PERIOD = 0.01;
 /////////////////////////////////////////////Drive PID Values//////////////////////////////////////////////
-	public static final double DRIVE_P = 0.01;
+	public static final double DRIVE_P = 0.0025;
 	public static final double DRIVE_I = 0.0015;
 	public static final double DRIVE_D = 0;
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////

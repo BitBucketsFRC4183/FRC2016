@@ -57,6 +57,7 @@ public class Drivey extends Subsystem {
 	
 	public void setGyroPID(double P, double I, double D, double setpoint){
 		yawController.setPID(P, I, D);
+		yawController.setOutputRange(-0.67, 0.67);
 		yawController.setSetpoint(setpoint);
 	}
 	

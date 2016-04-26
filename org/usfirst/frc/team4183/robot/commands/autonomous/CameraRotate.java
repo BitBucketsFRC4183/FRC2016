@@ -41,14 +41,13 @@ public class CameraRotate extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	if(System.currentTimeMillis()-timeInit<timeOut){
-	    	double targetX = Robot.cameraTable.getNumber("goalx", 0)*Constants.Autonomous.HFOV;
+	    	double targetX = Robot.cameraTable.getNumber("goalx", 0)*Constants.Autonomous.HFOV/2;
+	    	System.out.println("Target X " + targetX);
 	    	if(endFire){
 	    		Scheduler.getInstance().add(new SwarmyShootyLol());
 	    	}else{
 	    		Scheduler.getInstance().add(new RelativeRotate(targetX));
 	    	}
-    	}else{
-    		System.out.println("haha");
     	}
     }
 

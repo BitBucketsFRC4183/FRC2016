@@ -36,8 +36,8 @@ public class OI {
 	public Button winchZeroButt = new JoystickButton(operator, 1);
 	public Button winchIntakeButt = new JoystickButton(operator, 8);
 	
-	//public Button prepButt = new JoystickButton(operator, 1);
-	//public Button zeroButt = new JoystickButton(operator, 14);
+	public Button liftButt = new JoystickButton(operator, 9);
+	
 	public Button portButton = new JoystickButton(operator, 14);
 	
 	//public Button engageButt = new JoystickButton(operator, 9);
