@@ -1,6 +1,8 @@
-*.classpath
 *.class
+
 /bin/
 
+
 /build/
+
 /dist/
