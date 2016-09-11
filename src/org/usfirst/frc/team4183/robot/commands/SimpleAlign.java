@@ -24,8 +24,8 @@ public class SimpleAlign extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double x = Robot.cameraTable.getNumber("goalx")-180;
-    	if(Robot.cameraTable.getBoolean("present")){
+    	double x = Robot.cameraTable.getNumber("goalx")-180;	// TODO: Deprecation warning requires that default return value be added
+    	if(Robot.cameraTable.getBoolean("present")){			// TODO: Deprecation warning requires that default return value be added
     		if(x>60.0){
     			Robot.drivey.arcadeDrive(0, fastTurn);
     		}else if(x>0 && x<=60.0){
@@ -42,7 +42,7 @@ public class SimpleAlign extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        if(Math.abs(Robot.cameraTable.getNumber("goalx")-180)<15){
+        if(Math.abs(Robot.cameraTable.getNumber("goalx")-180)<15){	// TODO: Deprecation warning requires that default return value be added
         	Robot.drivey.arcadeDrive(0, 0);
         	return true;
         }else{
