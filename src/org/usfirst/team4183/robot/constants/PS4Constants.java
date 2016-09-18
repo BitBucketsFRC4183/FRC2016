@@ -1,5 +1,7 @@
 package org.usfirst.team4183.robot.constants;
 
+// These constants should be used in place of literals
+
 public enum PS4Constants {
 	SQUARE   (1), 
 	TRIANGLE (2), 
