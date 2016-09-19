@@ -106,7 +106,7 @@ public class Constants {
 	/**Time in ms to wait after ball is detected on intake**/
 	public static final int INTAKE_TIMEOUT_TIME = 1000;
 	/**Time in ms for the ball to cease contact with the shooter**/
-	public static final int SHOOT_DELAY_TIME = 75;
+	public static final int SHOOT_DELAY_TIME = 150;
 	
 	/** Max current for winch motor **/
 	public static final int WINCH_MAX_CURRENT = 50;
