@@ -179,7 +179,7 @@ public class Robot extends IterativeRobot {
 		oi.spinShoot.whenReleased(new StopShoot());
 		
 		oi.breakButt.whenPressed(new ToggleBrakeMode(true));
-		oi.coastButt.whenPressed(new ToggleBrakeMode(false));
+		
 		
 		oi.intakeInButt.whenPressed(new SwarmyIntakeIn());
 		oi.intakeOutButt.whenPressed(new SwarmyIntakeOut());
