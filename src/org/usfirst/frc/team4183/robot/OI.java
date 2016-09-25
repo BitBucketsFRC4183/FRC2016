@@ -47,7 +47,7 @@ public class OI {
 	public Button engageButt = new JoystickAxisButton(operator, AxisType.kThrottle, true);
 	
 	public Button slowMoButt = new JoystickButton(driver, 6);
-	public Button coastButt = new JoystickButton(driver, 3);
+	
 	public Button breakButt = new JoystickButton(driver, 2);
 	
 	//public Button winchPIDButt = new JoystickButton(operator,9);
