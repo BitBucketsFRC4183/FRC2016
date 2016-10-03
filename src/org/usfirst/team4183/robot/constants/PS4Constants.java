@@ -4,12 +4,12 @@ package org.usfirst.team4183.robot.constants;
 
 public enum PS4Constants {
 	SQUARE   (1), 
-	TRIANGLE (2), 
-	CIRCLE   (3),
-	CROSS    (4), 
+	CROSS    (2), 
+	CIRCLE   (3), 
+	TRIANGLE (4), 
 	L1       (5), 
-	L2       (6), 
-	R1       (7), 
+	R1       (6), 
+	L2       (7), 
 	R2       (8),
 	SHARE    (9), 
 	OPTIONS  (10), 
@@ -18,9 +18,14 @@ public enum PS4Constants {
 	PS4      (13), 
 	TRACKPAD (14);
 	
+	
 	private int value;
 	private PS4Constants(int value) {
 		this.value = value;
+	}
+	
+	public int getValue() {
+		return value;
 	}
 
 }
