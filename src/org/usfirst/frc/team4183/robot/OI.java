@@ -1,5 +1,7 @@
 package org.usfirst.frc.team4183.robot;
 
+import org.usfirst.team4183.robot.constants.PS4Constants;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Joystick.AxisType;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -21,34 +23,34 @@ public class OI {
 	public Button intakeOutButt = new JoystickAxisButton(operator, AxisType.kY, true);
 	public Button intakeInButt = new JoystickAxisButton(operator, AxisType.kY, false);
 	
-	public Button spoolButt = new JoystickButton(operator,5);
-	public Button unShootButt = new JoystickButton(operator,6);
-	public Button shootButt = new JoystickButton(operator,2);
+	public Button spoolButt = new JoystickButton(operator,PS4Constants.L1.getValue());
+	public Button unShootButt = new JoystickButton(operator,PS4Constants.R1.getValue());
+	public Button shootButt = new JoystickButton(operator,PS4Constants.CROSS.getValue());
 	public POVHat autoShootButt = new POVHat(operator, POVHat.HatDir.LEFT);
 	public POVHat spinShoot = new POVHat(operator, POVHat.HatDir.DOWN);
 	
-	public JoystickButton togglePhoto = new JoystickButton(driver, 4);
+	public JoystickButton togglePhoto = new JoystickButton(driver, PS4Constants.TRIANGLE.getValue());
 	
-	public Button winchLiftButt = new JoystickButton(operator, 3);
-	public Button winchShootButt = new JoystickButton(operator, 4);
-	public Button winchZeroButt = new JoystickButton(operator, 1);
-	public Button winchIntakeButt = new JoystickButton(operator, 8);
+	public Button winchLiftButt = new JoystickButton(operator, PS4Constants.CIRCLE.getValue());
+	public Button winchShootButt = new JoystickButton(operator, PS4Constants.TRIANGLE.getValue());
+	public Button winchZeroButt = new JoystickButton(operator, PS4Constants.SQUARE.getValue());
+	public Button winchIntakeButt = new JoystickButton(operator, PS4Constants.R2.getValue());
 	
-	public Button liftServoButt1 = new JoystickButton(operator, 9);
+	public Button liftServoButt1 = new JoystickButton(operator, PS4Constants.SHARE.getValue());
 	//public Button liftServoButt2 = new JoystickButton(operator, 10);
-	public Button liftMotorButt = new JoystickButton(driver, 10);
+	public Button liftMotorButt = new JoystickButton(driver, PS4Constants.OPTIONS.getValue());
 	//public Button liftMotorButt = new JoystickButton(driver, 1);
 	
 	
-	public Button portButton = new JoystickButton(operator, 14);
-	public Button defenseModeButt = new JoystickButton(driver, 5);
+	public Button portButton = new JoystickButton(operator, PS4Constants.TRACKPAD.getValue());
+	public Button defenseModeButt = new JoystickButton(driver, PS4Constants.L1.getValue());
 	
 	//public Button engageButt = new JoystickButton(operator, 9);
 	public Button engageButt = new JoystickAxisButton(operator, AxisType.kThrottle, true);
 	
-	public Button slowMoButt = new JoystickButton(driver, 6);
+	public Button slowMoButt = new JoystickButton(driver, PS4Constants.R1.getValue());
 	
-	public Button breakButt = new JoystickButton(driver, 2);
+	public Button breakButt = new JoystickButton(driver, PS4Constants.CROSS.getValue());
 	
 	//public Button winchPIDButt = new JoystickButton(operator,9);
 
