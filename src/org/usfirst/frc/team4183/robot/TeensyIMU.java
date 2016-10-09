@@ -1,6 +1,10 @@
 package org.usfirst.frc.team4183.robot;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import jssc.SerialPort;
 import jssc.SerialPortException;
 import jssc.SerialPortList;
@@ -10,13 +14,21 @@ public class TeensyIMU {
 	//public NetworkTable imuData;	
 	private final int IMUMESSAGELEN = 39;
 	
+	private double prevYaw;
+	private double prevTime;
+	
+	PrintWriter pw;
 	
 	public TeensyIMU(){
 		System.out.println("Starting teeeeeeeeeeensy");
 		serialPort = new SerialPort(SerialPortList.getPortNames()[0]);
 		//System.out.println(serialPort.getPortName());
+		try {
+			pw = new PrintWriter("imutest-"+System.currentTimeMillis()+".txt", "UTF-8");
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 		
-		    
 		try {
 			//Open serial port
 			serialPort.openPort();
@@ -49,13 +61,27 @@ public class TeensyIMU {
 									String[]poseData = line.split(",");
 									if(poseData.length>=5){
 										timeCurrent = System.currentTimeMillis();
-										Robot.IMUTable.putNumber("Yaw", hexToDouble(poseData[4])*(180.0/Math.PI));
+										long imutime = hexToLong(poseData[0]);
+										double yaw = hexToDouble(poseData[4])*(180.0/Math.PI);
+										
+										double timeDelta = (imutime - prevTime)/1000000.0;
+										
+										Robot.IMUTable.putNumber("IMU time", imutime);
+										Robot.IMUTable.putNumber("Yaw", yaw);
 										Robot.IMUTable.putNumber("Pitch", hexToDouble(poseData[3])*(180.0/Math.PI));
 										Robot.IMUTable.putNumber("Roll", hexToDouble(poseData[2])*(180.0/Math.PI));
 										Robot.IMUTable.putNumber("Update rate", (double)(timeCurrent-timePrev));
+										SmartDashboard.putNumber("IMU time", imutime);
+										SmartDashboard.putNumber("IMU rate", timeDelta);
+										SmartDashboard.putNumber("IMU yaw rate", (yaw - prevYaw)/timeDelta);
 										//System.out.println((double)(timeCurrent-timePrev));
-							
+										System.out.println("IMU Time: \t" + imutime + "\tYaw: \t" + yaw);
+										
+										pw.println("Time: " + imutime + "\tYaw Rate:" + (yaw - prevYaw)/timeDelta);
+										
 										timePrev = timeCurrent;
+										prevTime = imutime;
+										prevYaw = yaw;
 									}
 //									for(String datum:line.split(",")){
 //										//First number is yaw angle
