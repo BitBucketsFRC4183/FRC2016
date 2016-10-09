@@ -10,6 +10,20 @@ public class TeensyIMU {
 	//public NetworkTable imuData;	
 	private final int IMUMESSAGELEN = 39;
 	
+	private double yawAngle = 0.0;
+	
+	private double calYawBias = 0.0;
+	
+	// Cal bias is a small running average of the 
+	public void setCalYawBias(double biasValue)
+	{
+		calYawBias = biasValue;
+	}
+	
+	public double getYawAngle()
+	{
+		return yawAngle + calYawBias;
+	}
 	
 	public TeensyIMU(){
 		System.out.println("Starting teeeeeeeeeeensy");
@@ -49,7 +63,9 @@ public class TeensyIMU {
 									String[]poseData = line.split(",");
 									if(poseData.length>=5){
 										timeCurrent = System.currentTimeMillis();
-										Robot.IMUTable.putNumber("Yaw", hexToDouble(poseData[4])*(180.0/Math.PI));
+										yawAngle = calYawBias + hexToDouble(poseData[4])*(180.0/Math.PI);
+
+										Robot.IMUTable.putNumber("Yaw", yawAngle);
 										Robot.IMUTable.putNumber("Pitch", hexToDouble(poseData[3])*(180.0/Math.PI));
 										Robot.IMUTable.putNumber("Roll", hexToDouble(poseData[2])*(180.0/Math.PI));
 										Robot.IMUTable.putNumber("Update rate", (double)(timeCurrent-timePrev));

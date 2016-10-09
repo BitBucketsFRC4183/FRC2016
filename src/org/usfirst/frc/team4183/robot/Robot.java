@@ -63,7 +63,7 @@ public class Robot extends IterativeRobot {
 	public static final Shooty shooty = new Shooty();
 	public static final Climby climby = new Climby();
 	
-	//public static TeensyIMU teensyIMU;
+	public static TeensyIMU teensyIMU;
 	
 	public static PowerDistributionPanel pdp;
 	
@@ -89,7 +89,7 @@ public class Robot extends IterativeRobot {
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
-		//teensyIMU = new TeensyIMU();
+		teensyIMU = new TeensyIMU();
 		System.out.println("initializing robot");
 		IMUTable = NetworkTable.getTable("IMU Data");
 		cameraTable = NetworkTable.getTable("BucketVision");
