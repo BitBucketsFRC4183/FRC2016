@@ -110,7 +110,7 @@ public class Robot extends IterativeRobot {
 	 * the robot is disabled.
 	 */
 	public void disabledInit() {
-		
+		teensyIMU.enableBiasSampling(true);
 	}
 
 	public void disabledPeriodic() {
@@ -129,6 +129,8 @@ public class Robot extends IterativeRobot {
 	 * to the switch structure below with additional strings & commands.
 	 */
 	public void autonomousInit() {
+		teensyIMU.enableBiasSampling(false);
+		
 		autonomousCommand = (Command) chooser.getSelected();
 
 		/*
@@ -154,6 +156,8 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void teleopInit() {
+		teensyIMU.enableBiasSampling(false);
+		
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove

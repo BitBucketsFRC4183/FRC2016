@@ -3,6 +3,7 @@ package org.usfirst.frc.team4183.robot;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
+
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import jssc.SerialPort;
@@ -14,24 +15,52 @@ public class TeensyIMU {
 	//public NetworkTable imuData;	
 	private final int IMUMESSAGELEN = 39;
 	
+	private double yaw = 0.0;
+	private double yawRate = 0.0;
 	private double prevYaw;
 	private double prevTime;
 	
+	private double biasBuffer[] = new double[100];
+	private int biasBufferIdx = 0;
+	private boolean calcBias = false;
+	private int bufferLen = 0;
+	
 	PrintWriter pw;
 
-	private double yaw = 0.0;
-	
 	private double calYawRateBias = 0.0;
 	
 	// Cal bias is a small running average of the 
-	public void setcalYawRateBias(double biasValue)
-	{
+	public void setcalYawRateBias(double biasValue) {
 		calYawRateBias = biasValue;
 	}
 	
-	public double getYawAngle()
-	{
-		return yaw + calYawRateBias;
+	public double getYawAngle() {
+		return yaw;
+	}
+	
+	public void enableBiasSampling(boolean enable) {
+		calcBias = enable;
+		
+		if(calcBias) {
+			bufferLen = 0;
+		} else {
+			calYawRateBias = 0;
+			for(int i = 0; i < bufferLen; i++) {
+				calYawRateBias += biasBuffer[i];
+			}
+			calYawRateBias /= bufferLen;
+		}
+	}
+	
+	public void incrementBuffer(double val) {
+		biasBuffer[biasBufferIdx] = val;
+		
+		biasBufferIdx++;
+		bufferLen = bufferLen >= biasBuffer.length ? biasBuffer.length : bufferLen++;
+		
+		if(biasBufferIdx >= biasBuffer.length) {
+			biasBufferIdx = 0;
+		}
 	}
 	
 	public TeensyIMU(){
@@ -81,18 +110,23 @@ public class TeensyIMU {
 																		
 										double timeDelta = (imutime - prevTime)/1000000.0;
 										
+										yaw = hexToDouble(poseData[4])*(180.0/Math.PI) - calYawRateBias * timeDelta;
+										yawRate = (yaw - prevYaw)/timeDelta;
+										
+										if(calcBias) {
+											incrementBuffer(yawRate);
+										}
+										
 										Robot.IMUTable.putNumber("IMU time", imutime);
 										Robot.IMUTable.putNumber("Yaw", yaw);
-
-										yaw = hexToDouble(poseData[4])*(180.0/Math.PI) + calYawRateBias * timeDelta;
-										Robot.IMUTable.putNumber("Yaw", yawAngle);
-										
 										Robot.IMUTable.putNumber("Pitch", hexToDouble(poseData[3])*(180.0/Math.PI));
 										Robot.IMUTable.putNumber("Roll", hexToDouble(poseData[2])*(180.0/Math.PI));
 										Robot.IMUTable.putNumber("Update rate", (double)(timeCurrent-timePrev));
+										
 										SmartDashboard.putNumber("IMU time", imutime);
 										SmartDashboard.putNumber("IMU rate", timeDelta);
-										SmartDashboard.putNumber("IMU yaw rate", (yaw - prevYaw)/timeDelta);
+										SmartDashboard.putNumber("IMU yaw rate", yawRate);
+										
 										//System.out.println((double)(timeCurrent-timePrev));
 										System.out.println("IMU Time: \t" + imutime + "\tYaw: \t" + yaw);
 										
