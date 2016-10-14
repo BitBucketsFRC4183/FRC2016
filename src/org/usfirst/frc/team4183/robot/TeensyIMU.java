@@ -28,6 +28,7 @@ public class TeensyIMU {
 	PrintWriter pw;
 
 	private double calYawRateBias = 0.0;
+	private double accumulatedYawError = 0.0;
 	
 	// Cal bias is a small running average of the 
 	public void setcalYawRateBias(double biasValue) {
@@ -110,10 +111,23 @@ public class TeensyIMU {
 																		
 										double timeDelta = (imutime - prevTime)/1000000.0;
 										
-										yaw = hexToDouble(poseData[4])*(180.0/Math.PI) - calYawRateBias * timeDelta;
+										// Be absolutely certain the accumulated error is NOT
+										// used while bias calibration is in progress, this also
+										// resets the accumulated error if we re-enter the calibration
+										// state... not the best toggle, but good enought for now
+										if ( ! calcBias)
+										{
+											accumulatedYawError += calYawRateBias * timeDelta;
+										}
+										else
+										{
+											accumulatedYawError = 0.0;
+										}
+										yaw = hexToDouble(poseData[4])*(180.0/Math.PI) - accumulatedYawError;
 										yawRate = (yaw - prevYaw)/timeDelta;
 										
-										if(calcBias) {
+										if(calcBias) 
+										{
 											incrementBuffer(yawRate);
 										}
 										
@@ -130,7 +144,7 @@ public class TeensyIMU {
 										//System.out.println((double)(timeCurrent-timePrev));
 										System.out.println("IMU Time: \t" + imutime + "\tYaw: \t" + yaw);
 										
-										pw.println("Time: " + imutime + "\tYaw Rate:" + (yaw - prevYaw)/timeDelta);
+										pw.println("Time: " + imutime + "\tYaw Rate:" + yawRate);
 										
 										timePrev = timeCurrent;
 										prevTime = imutime;
