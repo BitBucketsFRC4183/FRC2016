@@ -3,6 +3,8 @@ package org.usfirst.frc.team4183.robot.commands.autonomous;
 import org.usfirst.frc.team4183.robot.Constants;
 import org.usfirst.frc.team4183.robot.commands.SwarmyMoveToPos;
 import org.usfirst.frc.team4183.robot.commands.ToggleBrakeMode;
+import org.usfirst.frc.team4183.robot.commands.EnablePhoton;
+import org.usfirst.frc.team4183.robot.commands.autonomous.RelativeRotate;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -19,9 +21,16 @@ public class OuterDefenseAutoAlign extends CommandGroup {
     	addSequential(new DriveAuto(0.75, 0, 3000));
     	addSequential(new ToggleBrakeMode(true));
     	addSequential(new SwarmyMoveToPos(Constants.WINCH_SHOOT_OUTERWORKS));
-    	addSequential(new CameraRotate(4000,false));
+    	addSequential(new RelativeRotate(180));
     	addSequential(new CameraRotate(4000, false));
-    	addSequential(new CameraRotate(4000, true));
+    	addSequential(new CameraRotate(4000, false));
+    	addSequential(new CameraRotate(4000, false));	// Temporary: don't shoot until we know align works
+    	addSequential(new EnablePhoton(true));
+    	addSequential(new DriveAuto(0, 0, 2000));
+    	addSequential(new EnablePhoton(false));
+    	
+    	
+    	
     	//addSequential(new SimpleAlign());
         // these will run in order.
 

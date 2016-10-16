@@ -15,7 +15,7 @@ public class TeensyIMU {
 	//public NetworkTable imuData;	
 	private final int IMUMESSAGELEN = 39;
 	
-	private double yaw = 0.0;
+	public double yaw = 0.0;
 	private double yawRate = 0.0;
 	private double prevYaw;
 	private double prevTime;
@@ -123,7 +123,7 @@ public class TeensyIMU {
 										{
 											accumulatedYawError = 0.0;
 										}
-										yaw = hexToDouble(poseData[4])*(180.0/Math.PI) - accumulatedYawError;
+										yaw = hexToDouble(poseData[4])*(180.0/Math.PI); //- accumulatedYawError;
 										yawRate = (yaw - prevYaw)/timeDelta;
 										
 										if(calcBias) 

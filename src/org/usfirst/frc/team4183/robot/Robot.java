@@ -100,7 +100,7 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("OtherDefensesAuto", new OtherDefensesAuto());
 		chooser.addObject("Rock wall auto", new RockWallAuto());
 		chooser.addObject("Goal Align + Shoot", new OuterDefenseAutoAlign());
-		chooser.addObject("Goal Align", new SimpleVision());
+		chooser.addObject("Goal Align Test Only", new SimpleVision());
 		SmartDashboard.putData("Auto mode", chooser);
 	}
 
@@ -110,6 +110,9 @@ public class Robot extends IterativeRobot {
 	 * the robot is disabled.
 	 */
 	public void disabledInit() {
+		Command disablePhoton = new EnablePhoton(false);
+		disablePhoton.setRunWhenDisabled(true);
+		Scheduler.getInstance().add(disablePhoton);
 		teensyIMU.enableBiasSampling(true);
 	}
 
