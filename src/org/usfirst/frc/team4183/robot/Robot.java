@@ -63,7 +63,7 @@ public class Robot extends IterativeRobot {
 	public static final Shooty shooty = new Shooty();
 	public static final Climby climby = new Climby();
 	
-	//public static TeensyIMU teensyIMU;
+	public static TeensyIMU teensyIMU;
 	
 	public static PowerDistributionPanel pdp;
 	
@@ -89,7 +89,7 @@ public class Robot extends IterativeRobot {
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
-		//teensyIMU = new TeensyIMU();
+		teensyIMU = new TeensyIMU();
 		System.out.println("initializing robot");
 		IMUTable = NetworkTable.getTable("IMU Data");
 		cameraTable = NetworkTable.getTable("BucketVision");
@@ -100,7 +100,7 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("OtherDefensesAuto", new OtherDefensesAuto());
 		chooser.addObject("Rock wall auto", new RockWallAuto());
 		chooser.addObject("Goal Align + Shoot", new OuterDefenseAutoAlign());
-		chooser.addObject("Goal Align", new SimpleVision());
+		chooser.addObject("Goal Align Test Only", new SimpleVision());
 		SmartDashboard.putData("Auto mode", chooser);
 	}
 
@@ -110,7 +110,10 @@ public class Robot extends IterativeRobot {
 	 * the robot is disabled.
 	 */
 	public void disabledInit() {
-		
+		Command disablePhoton = new EnablePhoton(false);
+		disablePhoton.setRunWhenDisabled(true);
+		Scheduler.getInstance().add(disablePhoton);
+		teensyIMU.enableBiasSampling(true);
 	}
 
 	public void disabledPeriodic() {
@@ -129,6 +132,8 @@ public class Robot extends IterativeRobot {
 	 * to the switch structure below with additional strings & commands.
 	 */
 	public void autonomousInit() {
+		teensyIMU.enableBiasSampling(false);
+		
 		autonomousCommand = (Command) chooser.getSelected();
 
 		/*
@@ -154,6 +159,8 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void teleopInit() {
+		teensyIMU.enableBiasSampling(false);
+		
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove

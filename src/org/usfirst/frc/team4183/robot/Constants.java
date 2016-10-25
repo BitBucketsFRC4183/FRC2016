@@ -79,7 +79,7 @@ public class Constants {
 	/** The angle to set the servo to to lock the ratchet **/
 	public static final int WINCH_SERVO_LOCK_ANGLE = 140;
 	
-	public static final double SERVO_OPEN_POS = 0.75;
+	public static final double SERVO_OPEN_POS = 0.25;
 	public static final double SERVO_CLOSE_POS = 0.0;
 	
 	/** Shooting from batter setpoint **/
@@ -126,8 +126,8 @@ public class Constants {
 	public static final double WINCH_ACCEPTANCE_RANGE = 300;
 	public static final double WINCH_PID_PERIOD = 0.01;
 /////////////////////////////////////////////Drive PID Values//////////////////////////////////////////////
-	public static final double DRIVE_P = 0.0025;
-	public static final double DRIVE_I = 0.0015;
+	public static final double DRIVE_P = 0.0150;
+	public static final double DRIVE_I = 0.00045;
 	public static final double DRIVE_D = 0;
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////// POWER DISTRIBUTION BOARD CHANNELS/////////////////////////////////////////////////

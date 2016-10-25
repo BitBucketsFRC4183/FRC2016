@@ -24,8 +24,10 @@ public class PIDGyro implements PIDSource {
 	public double pidGet() {
 		// TODO Auto-generated method stub
 		//System.out.println("PID Gyro" + Robot.networkTable.getNumber("Yaw"));
-		Robot.IMUTable.putNumber("Yaw Corrected", correctYaw(Robot.IMUTable.getNumber("Yaw")));
-		return Robot.IMUTable.getNumber("Yaw Corrected");
+		double corrected = correctYaw(Robot.teensyIMU.getYawAngle());
+		
+		//Robot.IMUTable.putNumber("Yaw Corrected", corrected); //IMUTable.getNumber("Yaw")));
+		return corrected;
 	}
 	
 	@SuppressWarnings("deprecation")
